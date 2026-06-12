@@ -29,4 +29,5 @@ dimensions:
 
 measures:
   count:
+    drill_fields: []
     aggregate_type: count
