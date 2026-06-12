@@ -1,0 +1,6 @@
+base_view: prod_marts__mart_customer_ltv
+label: Customer LTV
+description: Analyze customer lifetime value including revenue, gross profit,
+  order history, LTV tier, customer segment, and return behavior.
+
+joins: {}

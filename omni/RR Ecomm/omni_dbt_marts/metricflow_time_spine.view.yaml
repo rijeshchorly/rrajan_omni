@@ -1,0 +1,28 @@
+# Reference this view as omni_dbt_marts__metricflow_time_spine
+schema_label: ""
+#This description was pulled from dbt.
+description: Date spine table required by MetricFlow for time-series metric queries
+
+schema: omni_dbt_marts
+table_name: metricflow_time_spine
+
+dimensions:
+  date_day: {}
+
+measures:
+  count:
+    aggregate_type: count
+
+#The info below was pulled from your dbt repository and is read-only.
+dbt:
+  name: metricflow_time_spine
+  target_schema: prod
+  description: Date spine table required by MetricFlow for time-series metric queries
+  config:
+    schema: marts
+    materialized: table
+  code: |-
+    {{ config(materialized='table') }}
+
+    select generate_series::date as date_day
+    from generate_series('2019-01-01'::timestamp, '2030-12-31'::timestamp, interval '1 day')

@@ -1,0 +1,7 @@
+base_view: prod_intermediate__int_session_events
+label: Session Events
+description: Explore individual session-level behavior including traffic
+  sources, browser, location, event types, conversions, and session duration.
+
+joins:
+  prod_intermediate__int_user_sessions: {}

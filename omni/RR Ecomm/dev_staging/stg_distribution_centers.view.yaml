@@ -1,0 +1,15 @@
+# Reference this view as dev_staging__stg_distribution_centers
+schema: dev_staging
+table_name: stg_distribution_centers
+
+dimensions:
+  distribution_center_name: {}
+  dc_latitude: {}
+  dc_longitude: {}
+
+  distribution_center_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

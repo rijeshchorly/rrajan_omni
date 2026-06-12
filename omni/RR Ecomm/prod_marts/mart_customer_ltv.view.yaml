@@ -1,0 +1,144 @@
+# Reference this view as prod_marts__mart_customer_ltv
+label: Customers
+
+schema: prod_marts
+table_name: mart_customer_ltv
+
+dimensions:
+  full_name: {}
+  email: {}
+  age: {}
+  gender: {}
+  city: {}
+  state: {}
+  country: {}
+  traffic_source: {}
+  user_created_at: {}
+  customer_segment: {}
+  lifetime_orders: {}
+  lifetime_revenue: {}
+  lifetime_gross_profit: {}
+  avg_order_value: {}
+  total_returned_items: {}
+  first_order_at: {}
+  most_recent_order_at: {}
+  days_customer_active: {}
+  ltv_tier: {}
+  return_rate_per_order: {}
+
+  user_id:
+    format: ID
+    primary_key: true
+
+  _entity_user:
+    # Entity is defined in the 'customers' dbt semantic model (models/marts/_semantic_models.yml)
+    sql: ${user_id}
+    hidden: true
+
+measures:
+  count:
+    aggregate_type: count
+
+  customer_count:
+    # Measure is defined in the 'customers' dbt semantic model (models/marts/_semantic_models.yml)
+    sql: ${user_id}
+    description: Count of distinct customers
+    aggregate_type: count_distinct
+
+  total_customers:
+    # Measure is defined by the 'total_customers' dbt metric (models/marts/_metrics.yml)
+    sql: ${user_id}
+    label: Total Customers
+    description: Count of distinct registered customers
+    aggregate_type: count_distinct
+
+  total_lifetime_revenue:
+    sql: ${prod_marts__mart_customer_ltv.lifetime_revenue}
+    aggregate_type: sum
+
+  total_lifetime_gross_profit:
+    sql: ${prod_marts__mart_customer_ltv.lifetime_gross_profit}
+    aggregate_type: sum
+
+  avg_lifetime_revenue:
+    sql: ${prod_marts__mart_customer_ltv.lifetime_revenue}
+    aggregate_type: average
+
+  avg_order_value_measure:
+    sql: ${prod_marts__mart_customer_ltv.avg_order_value}
+    label: Avg Order Value
+    aggregate_type: average
+
+  total_lifetime_orders:
+    sql: ${prod_marts__mart_customer_ltv.lifetime_orders}
+    aggregate_type: sum
+
+  avg_days_customer_active:
+    sql: ${prod_marts__mart_customer_ltv.days_customer_active}
+    aggregate_type: average
+
+  total_returned_items_sum:
+    sql: ${prod_marts__mart_customer_ltv.total_returned_items}
+    label: Total Returned Items
+    aggregate_type: sum
+
+#The info below was pulled from your dbt repository and is read-only.
+dbt:
+  name: mart_customer_ltv
+  target_schema: prod
+  config:
+    schema: marts
+    materialized: table
+  code: |-
+    /*
+      mart_customer_ltv
+      -----------------
+      One row per customer with lifetime value metrics, demographics, and
+      acquisition source. The primary customer analytics mart.
+    */
+
+    with user_history as (
+        select * from {{ ref('int_user_order_history') }}
+    )
+
+    select
+        user_id,
+        full_name,
+        email,
+        age,
+        gender,
+        city,
+        state,
+        country,
+        traffic_source,
+        user_created_at,
+
+        -- purchase behaviour
+        customer_segment,
+        lifetime_orders,
+        lifetime_revenue,
+        lifetime_gross_profit,
+        avg_order_value,
+        total_returned_items,
+
+        -- activity window
+        first_order_at,
+        most_recent_order_at,
+        days_customer_active,
+
+        -- LTV tiers (simple revenue-based bucketing)
+        case
+            when lifetime_revenue = 0         then 'no_spend'
+            when lifetime_revenue < 100       then 'low'
+            when lifetime_revenue < 500       then 'mid'
+            when lifetime_revenue < 1000      then 'high'
+            else                                   'vip'
+        end                                         as ltv_tier,
+
+        -- return rate
+        round(
+            total_returned_items::float / nullif(lifetime_orders, 0),
+            4
+        )                                           as return_rate_per_order
+
+    from user_history

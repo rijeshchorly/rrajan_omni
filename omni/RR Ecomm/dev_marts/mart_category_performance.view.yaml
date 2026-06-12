@@ -1,0 +1,21 @@
+# Reference this view as dev_marts__mart_category_performance
+schema: dev_marts
+table_name: mart_category_performance
+
+dimensions:
+  month: {}
+  product_category: {}
+  product_department: {}
+  units_sold: {}
+  orders: {}
+  unique_buyers: {}
+  revenue: {}
+  cost: {}
+  gross_profit: {}
+  gross_margin_pct: {}
+  returned_units: {}
+  return_rate: {}
+
+measures:
+  count:
+    aggregate_type: count

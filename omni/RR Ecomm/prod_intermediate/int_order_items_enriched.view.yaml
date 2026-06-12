@@ -1,0 +1,243 @@
+# Reference this view as prod_intermediate__int_order_items_enriched
+label: Order Items
+#This description was pulled from dbt.
+description: |
+  Order line items joined with product catalogue and inventory cost data. Core grain for all revenue and margin calculations. One row per order item.
+
+schema: prod_intermediate
+table_name: int_order_items_enriched
+
+dimensions:
+  status: {}
+  is_returned: {}
+  days_to_deliver: {}
+  product_name: {}
+  product_category: {}
+  product_brand: {}
+  product_department: {}
+  product_sku: {}
+  sale_price: {}
+  gross_profit: {}
+  gross_margin_pct: {}
+  shipped_at: {}
+  delivered_at: {}
+  returned_at: {}
+  unit_cost: {}
+
+  order_item_id:
+    format: ID
+    primary_key: true
+
+  order_id:
+    format: ID
+
+  user_id:
+    format: ID
+
+  product_id:
+    format: ID
+
+  inventory_item_id:
+    format: ID
+
+  created_at:
+    label: Created At (time)
+
+  _entity_order_item:
+    # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    sql: ${order_item_id}
+    hidden: true
+
+  _entity_order:
+    # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    sql: ${order_id}
+    hidden: true
+
+  _entity_user:
+    # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    sql: ${user_id}
+    hidden: true
+
+  _entity_product:
+    # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    sql: ${product_id}
+    hidden: true
+
+  _filter_total_revenue:
+    # Produced by the dbt semantic layer integration
+    sql: ${status} <> 'Cancelled'
+    description: Intermediat filter dimension for measure total_revenue
+    hidden: true
+
+  _filter_total_cost:
+    # Produced by the dbt semantic layer integration
+    sql: ${status} <> 'Cancelled'
+    description: Intermediate filter dimension for measure total_cost
+    hidden: true
+
+  _filter_total_units_sold:
+    # Produced by the dbt semantic layer integration
+    sql: ${status} <> 'Cancelled'
+    description: Intermediate filter dimension for measure total_units_sold
+    hidden: true
+
+measures:
+  count:
+    aggregate_type: count
+
+  revenue:
+    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    sql: ${sale_price}
+    description: Sum of sale price across order items
+    aggregate_type: sum
+
+  cost:
+    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    sql: ${unit_cost}
+    description: Sum of unit cost across order items
+    aggregate_type: sum
+
+  units_sold:
+    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    sql: ${order_item_id}
+    aggregate_type: count
+
+  returned_units:
+    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    sql: CASE WHEN ${is_returned} THEN 1 ELSE 0 END
+    description: Count of returned order items
+    aggregate_type: sum
+
+  avg_days_to_deliver:
+    # Measure is defined by the 'avg_days_to_deliver' dbt metric (models/marts/_metrics.yml)
+    sql: ${days_to_deliver}
+    label: Avg Days to Deliver
+    description: Average number of days from shipment to delivery
+    aggregate_type: average
+
+  total_revenue:
+    # Measure is defined by the 'total_revenue' dbt metric (models/marts/_metrics.yml)
+    sql: ${sale_price}
+    label: Total Revenue
+    description: Sum of sale price across all non-cancelled order items
+    aggregate_type: sum
+    filters:
+      _filter_total_revenue:
+        is: true
+
+  total_cost:
+    # Measure is defined by the 'total_cost' dbt metric (models/marts/_metrics.yml)
+    sql: ${unit_cost}
+    label: Total Cost
+    description: Sum of unit cost across all non-cancelled order items
+    aggregate_type: sum
+    filters:
+      _filter_total_cost:
+        is: true
+
+  return_rate:
+    # Measure is defined by the 'return_rate' dbt metric (models/marts/_metrics.yml)
+    sql: CAST(${total_returned_units} AS DOUBLE) / NULLIF(CAST(${total_units_sold}
+      AS DOUBLE), 0)
+    label: Return Rate
+    description: Ratio of returned units to total non-cancelled units sold
+
+  total_units_sold:
+    # Measure is defined by the 'total_units_sold' dbt metric (models/marts/_metrics.yml)
+    sql: ${order_item_id}
+    label: Total Units Sold
+    description: Count of order items excluding cancelled
+    aggregate_type: count
+    filters:
+      _filter_total_units_sold:
+        is: true
+
+  total_returned_units:
+    # Measure is defined by the 'total_returned_units' dbt metric (models/marts/_metrics.yml)
+    sql: CASE WHEN ${is_returned} THEN 1 ELSE 0 END
+    label: Total Returned Units
+    description: Count of returned order items
+    aggregate_type: sum
+
+#The info below was pulled from your dbt repository and is read-only.
+dbt:
+  name: int_order_items_enriched
+  target_schema: prod
+  description: |
+    Order line items joined with product catalogue and inventory cost data. Core grain for all revenue and margin calculations. One row per order item.
+  config:
+    schema: intermediate
+    materialized: view
+  code: |-
+    /*
+      int_order_items_enriched
+      ------------------------
+      Enriches each order line item with product catalogue and inventory cost data.
+      This is the core "fact" grain used by most downstream mart models.
+    */
+
+    with order_items as (
+        select * from {{ ref('stg_order_items') }}
+    ),
+
+    products as (
+        select * from {{ ref('stg_products') }}
+    ),
+
+    inventory as (
+        select * from {{ ref('stg_inventory_items') }}
+    ),
+
+    int_order_items_enriched as (
+        select
+            -- line item identifiers
+            oi.order_item_id,
+            oi.order_id,
+            oi.user_id,
+            oi.product_id,
+            oi.inventory_item_id,
+
+            -- order item status
+            oi.status,
+            oi.is_returned,
+            oi.days_to_deliver,
+
+            -- product attributes (from catalogue)
+            p.product_name,
+            p.product_category,
+            p.product_brand,
+            p.product_department,
+            p.product_sku,
+
+            -- financials
+            oi.sale_price,
+            coalesce(inv.cost, p.cost)              as unit_cost,
+            oi.sale_price - coalesce(inv.cost, p.cost)  as gross_profit,
+            round(
+                case when oi.sale_price > 0
+                     then (oi.sale_price - coalesce(inv.cost, p.cost)) / oi.sale_price
+                     else null
+                end,
+                4
+            )                                       as gross_margin_pct,
+
+            -- timestamps
+            oi.created_at,
+            oi.shipped_at,
+            oi.delivered_at,
+            oi.returned_at
+
+        from order_items oi
+        left join products p
+            on oi.product_id = p.product_id
+        left join inventory inv
+            on oi.inventory_item_id = inv.inventory_item_id
+    )
+
+    select * from int_order_items_enriched
+  referenced_by:
+    [
+      int_orders_with_metrics,
+      mart_product_performance,
+      mart_category_performance
+    ]

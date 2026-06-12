@@ -1,0 +1,49 @@
+#default_numeric_locale: fr_FR
+ai_context: |
+  Always refer to the user in the first person "You, your" etc E.g. "Your query asks about <X>". Never refer to them in the third person, or sound like you're talking to yourself do not say phrases like "The user is asking about <X>"
+  Refer to yourself as "I, me" etc. E.g. "I will look in <X> topic", "Let me find <Y>".
+  Always provide your responses in simple clear language, avoid technical terms and do not expose explicit field names in summary responses.
+  If the result includes totals in multiple currencies, do not order, compare, or perform operations between currencies.
+  Instead, present separate lists per currency (or group by currency first), and if you need rankings, rank only within each currency group.
+  Never show technical internal labels such as topic names, view names, or SQL logic. Present only the business results and plain explanations.
+  Never show internal steps or process narration (for example "looking up values", "checking joins", "filtering logic", or "how I derived this"). Present only the final result and a brief plain-language explanation when needed.
+  Keep the response pleasant to read:
+  - Prefer short sentences and short paragraphs.
+  - Use a small number of bullets only when listing items.
+  - Avoid visual clutter (for example repeated parentheses, long chains of conditions, or raw identifiers).
+  - Do not include underscores or other styling characters that look technical.
+  Never show internal steps or process narration (for example "looking up values", "checking joins", "filtering logic", or "how I derived this"). Present only the final result and a brief plain-language explanation when needed.
+  Output must all be in caps.
+  Avoid using events count.
+  Don't break by event_type.
+
+ai_settings:
+  query_all_views_and_fields: enabled
+
+ignored_views: [ main.distribution_centers ]
+
+ai_chat_topics: [ tag:ai_available ]
+
+skills:
+  org_lookup_fast:
+    label: Lookup an opportunity
+    input: ask the user for the name of the opportunity they want to get information
+      about before proceeding
+    description: |-
+      your task is to lookup opportunity information related to a given organization. you should use the Salesforce Opportunities topic. 
+      1. find all opportunities matching the name the user entered, pull back way way way too many fields for each record. 
+      2. if there are no closed won opportunities, this is likely a prospect. if there is a closed won opportunity, this is likely a customer. 
+      3. summarize your findings in an easily consumable format. the goal is to give the user a solid overview of the opportunity, consider the following sections: 
+          - top level stats/overview including opp value, stage, close date, and account team
+          - background on the opp, anything interesting about the use case, competitors, current tools, etc
+          - active deal information like MEDDPICC criteria
+      4. search the web for information about the company with a focus on ai and data
+    options:
+      deep_research: false
+  top_customers:
+    label: Top Customers
+    input: Ask which country first
+    description: |-
+      Find the top 20 customers by total lifetime revenue. Include
+      customer name, total revenue, order count, and date of most recent order.
+      Sort by revenue descending.

@@ -1,0 +1,35 @@
+# Reference this view as dev_intermediate__int_user_sessions
+schema: dev_intermediate
+table_name: int_user_sessions
+
+dimensions:
+  total_sessions: {}
+  total_events: {}
+  total_product_views: {}
+  total_cart_events: {}
+  total_purchase_events: {}
+  total_cancel_events: {}
+  converted_sessions: {}
+  session_conversion_rate: {}
+  avg_session_duration_minutes: {}
+  total_session_minutes: {}
+  first_session_at: {}
+  last_session_at: {}
+  primary_traffic_source: {}
+  primary_browser: {}
+  lifetime_orders: {}
+  lifetime_revenue: {}
+  lifetime_gross_profit: {}
+  avg_order_value: {}
+  first_order_at: {}
+  most_recent_order_at: {}
+  customer_segment: {}
+  days_first_session_to_first_order: {}
+  sessions_before_first_order: {}
+
+  user_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

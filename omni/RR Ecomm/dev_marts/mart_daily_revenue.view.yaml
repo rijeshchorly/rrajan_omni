@@ -1,0 +1,20 @@
+# Reference this view as dev_marts__mart_daily_revenue
+schema: dev_marts
+table_name: mart_daily_revenue
+
+dimensions:
+  order_date: {}
+  order_month: {}
+  order_year: {}
+  orders_placed: {}
+  unique_buyers: {}
+  total_items_sold: {}
+  gross_revenue: {}
+  total_cost: {}
+  gross_profit: {}
+  avg_order_value: {}
+  gross_margin_pct: {}
+
+measures:
+  count:
+    aggregate_type: count
