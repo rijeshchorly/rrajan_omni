@@ -19,7 +19,8 @@ dimensions:
     sql: STRFTIME(delivered_at, '%d.%m.%Y')
     markdown: "**{{value}}** — [Search](https://google.com)"
 
-  pct_of_total_revenue:
+  #pct_of_total_revenue:
+  pct_of_total_amount:
     sql: AVG(${main__order_items.sale_price}) OVER ( ORDER BY
       ${main__order_items.created_at[date]} ROWS BETWEEN 27 PRECEDING AND
       CURRENT ROW )
