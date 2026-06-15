@@ -5,12 +5,12 @@
     ${prod_intermediate__int_user_sessions.user_id}
   relationship_type: many_to_one
 
-# Relationship is defined in the 'orders' dbt semantic model (models/marts/_semantic_models.yml)
-- join_from_view: omni_dbt_intermediate__int_orders_with_metrics
-  join_to_view: omni_dbt_marts__mart_customer_ltv
+# Relationship is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+- join_from_view: omni_dbt_intermediate__int_order_items_enriched
+  join_to_view: omni_dbt_intermediate__int_orders_with_metrics
   join_type: always_left
-  on_sql: ${omni_dbt_intermediate__int_orders_with_metrics._entity_user} =
-    ${omni_dbt_marts__mart_customer_ltv._entity_user}
+  on_sql: ${omni_dbt_intermediate__int_order_items_enriched._entity_order} =
+    ${omni_dbt_intermediate__int_orders_with_metrics._entity_order}
   relationship_type: assumed_many_to_one
 
 # Relationship is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
@@ -21,12 +21,12 @@
     ${omni_dbt_marts__mart_customer_ltv._entity_user}
   relationship_type: assumed_many_to_one
 
-# Relationship is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-- join_from_view: omni_dbt_intermediate__int_order_items_enriched
-  join_to_view: omni_dbt_intermediate__int_orders_with_metrics
+# Relationship is defined in the 'orders' dbt semantic model (models/marts/_semantic_models.yml)
+- join_from_view: omni_dbt_intermediate__int_orders_with_metrics
+  join_to_view: omni_dbt_marts__mart_customer_ltv
   join_type: always_left
-  on_sql: ${omni_dbt_intermediate__int_order_items_enriched._entity_order} =
-    ${omni_dbt_intermediate__int_orders_with_metrics._entity_order}
+  on_sql: ${omni_dbt_intermediate__int_orders_with_metrics._entity_user} =
+    ${omni_dbt_marts__mart_customer_ltv._entity_user}
   relationship_type: assumed_many_to_one
 
 # Relationship is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
