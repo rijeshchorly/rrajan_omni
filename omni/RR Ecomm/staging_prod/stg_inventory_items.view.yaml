@@ -1,0 +1,76 @@
+# Reference this view as staging_prod__stg_inventory_items
+#This description was pulled from dbt.
+description: Individual inventory units. One row per physical item.
+
+schema: staging_prod
+table_name: stg_inventory_items
+
+dimensions:
+  product_name: {}
+  product_brand: {}
+  product_category: {}
+  product_department: {}
+  product_sku: {}
+  product_retail_price: {}
+  cost: {}
+  is_sold: {}
+  created_at: {}
+  sold_at: {}
+
+  inventory_item_id:
+    format: ID
+
+  product_id:
+    format: ID
+
+  product_distribution_center_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count
+
+#The info below was pulled from your dbt repository and is read-only.
+dbt:
+  name: stg_inventory_items
+  target_schema: prod
+  description: Individual inventory units. One row per physical item.
+  config:
+    schema: staging
+    materialized: view
+  code: |-
+    with inventory_items as (
+        select * from {{ source('Ecomm', 'inventory_items') }}
+    ),
+
+    stg_inventory_items as (
+        select
+            -- ids
+            id                          as inventory_item_id,
+            product_id,
+            product_distribution_center_id,
+
+            -- product snapshot (denormalised on ingest from BigQuery export)
+            product_name,
+            product_brand,
+            product_category,
+            product_department,
+            product_sku,
+            product_retail_price,
+            cost,
+
+            -- derived
+            case
+                when sold_at is not null then true
+                else false
+            end                         as is_sold,
+
+            -- timestamps
+            created_at,
+            sold_at
+
+        from inventory_items
+    )
+
+    select * from stg_inventory_items
+  referenced_by: [ int_order_items_enriched ]
