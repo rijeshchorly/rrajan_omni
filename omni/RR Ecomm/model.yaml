@@ -26,7 +26,12 @@ ai_context: |
   Don't break by event_type.
 
 ai_settings:
-  query_all_views_and_fields: enabled
+  #query_all_views_and_fields: enabled
+  query_all_views_and_fields: disabled
+  analyze_configuration:
+    model: fastest
+    thinking: medium
+  conversation_prune_length: short
 
 ignored_views: [ main.distribution_centers ]
 
