@@ -1,0 +1,30 @@
+# Reference this view as intermediate_preprod__int_user_order_history
+schema: intermediate_preprod
+table_name: int_user_order_history
+
+dimensions:
+  full_name: {}
+  email: {}
+  age: {}
+  gender: {}
+  city: {}
+  state: {}
+  country: {}
+  traffic_source: {}
+  user_created_at: {}
+  lifetime_orders: {}
+  lifetime_revenue: {}
+  lifetime_gross_profit: {}
+  avg_order_value: {}
+  total_returned_items: {}
+  first_order_at: {}
+  most_recent_order_at: {}
+  days_customer_active: {}
+  customer_segment: {}
+
+  user_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

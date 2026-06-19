@@ -1,0 +1,30 @@
+# Reference this view as intermediate_preprod__int_session_events
+schema: intermediate_preprod
+table_name: int_session_events
+
+dimensions:
+  traffic_source: {}
+  browser: {}
+  city: {}
+  state: {}
+  total_events: {}
+  session_start_at: {}
+  session_end_at: {}
+  session_duration_minutes: {}
+  home_events: {}
+  department_events: {}
+  product_views: {}
+  cart_events: {}
+  purchase_events: {}
+  cancel_events: {}
+  converted: {}
+
+  session_id:
+    format: ID
+
+  user_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

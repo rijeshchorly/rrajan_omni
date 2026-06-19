@@ -1,0 +1,32 @@
+# Reference this view as staging_preprod__stg_order_items
+schema: staging_preprod
+table_name: stg_order_items
+
+dimensions:
+  status: {}
+  sale_price: {}
+  created_at: {}
+  shipped_at: {}
+  delivered_at: {}
+  returned_at: {}
+  is_returned: {}
+  days_to_deliver: {}
+
+  order_item_id:
+    format: ID
+
+  order_id:
+    format: ID
+
+  user_id:
+    format: ID
+
+  product_id:
+    format: ID
+
+  inventory_item_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count
