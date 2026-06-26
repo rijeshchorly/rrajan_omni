@@ -1,3 +1,10 @@
+- join_from_view: main__order_items
+  join_to_view: revenue_growth_rate
+  join_type: always_left
+  on_sql: ${main__order_items.created_at[month]} =
+    ${revenue_growth_rate.created_at_month}
+  relationship_type: many_to_one
+
 # Relationship is defined in the 'orders' dbt semantic model (models/marts/_semantic_models.yml)
 - join_from_view: intermediate_prod__int_orders_with_metrics
   join_to_view: marts_prod__mart_customer_ltv
