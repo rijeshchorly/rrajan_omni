@@ -33,7 +33,11 @@ ai_settings:
     thinking: medium
   conversation_prune_length: short
 
-ignored_views: [ main.distribution_centers ]
+# model layer edit test
+
+ignored_schemas: [ intermediate_prod ]
+
+#ignored_views: [ main.distribution_centers ]
 
 ai_chat_topics: [ tag:ai_available ]
 
@@ -60,4 +64,3 @@ skills:
       Find the top 20 customers by total lifetime revenue. Include
       customer name, total revenue, order count, and date of most recent order.
       Sort by revenue descending.
-# model layer edit test
