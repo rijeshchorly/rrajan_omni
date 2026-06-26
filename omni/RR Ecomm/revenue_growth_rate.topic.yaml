@@ -1,5 +1,0 @@
-base_view: revenue_growth_rate
-label: Revenue Growth Rate
-
-joins:
-  main__order_items: {}
