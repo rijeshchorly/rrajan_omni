@@ -1,41 +1,3 @@
-- join_from_view: main__order_items
-  join_to_view: revenue_growth_rate
-  join_type: always_left
-  on_sql: ${main__order_items.created_at[month]} =
-    ${revenue_growth_rate.created_at_month}
-  relationship_type: many_to_one
-
-# Relationship is defined in the 'orders' dbt semantic model (models/marts/_semantic_models.yml)
-- join_from_view: intermediate_prod__int_orders_with_metrics
-  join_to_view: marts_prod__mart_customer_ltv
-  join_type: always_left
-  on_sql: ${intermediate_prod__int_orders_with_metrics._entity_user} =
-    ${marts_prod__mart_customer_ltv._entity_user}
-  relationship_type: assumed_many_to_one
-
-# Relationship is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-- join_from_view: intermediate_prod__int_order_items_enriched
-  join_to_view: intermediate_prod__int_orders_with_metrics
-  join_type: always_left
-  on_sql: ${intermediate_prod__int_order_items_enriched._entity_order} =
-    ${intermediate_prod__int_orders_with_metrics._entity_order}
-  relationship_type: assumed_many_to_one
-
-# Relationship is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-- join_from_view: intermediate_prod__int_order_items_enriched
-  join_to_view: marts_prod__mart_customer_ltv
-  join_type: always_left
-  on_sql: ${intermediate_prod__int_order_items_enriched._entity_user} =
-    ${marts_prod__mart_customer_ltv._entity_user}
-  relationship_type: assumed_many_to_one
-
-- join_from_view: prod_intermediate__int_session_events
-  join_to_view: prod_intermediate__int_user_sessions
-  join_type: always_left
-  on_sql: ${prod_intermediate__int_session_events.user_id} =
-    ${prod_intermediate__int_user_sessions.user_id}
-  relationship_type: many_to_one
-
 # Relationship is defined in the 'orders' dbt semantic model (models/marts/_semantic_models.yml)
 - join_from_view: omni_dbt_intermediate__int_orders_with_metrics
   join_to_view: omni_dbt_marts__mart_customer_ltv
@@ -59,24 +21,3 @@
   on_sql: ${omni_dbt_intermediate__int_order_items_enriched._entity_order} =
     ${omni_dbt_intermediate__int_orders_with_metrics._entity_order}
   relationship_type: assumed_many_to_one
-
-- join_from_view: main__order_items
-  join_to_view: main__orders
-  join_type: always_left
-  on_sql: ${main__order_items.order_id} = ${main__orders.order_id}
-  relationship_type: assumed_many_to_one
-  join_to_view_as_label: OR Items
-
-- join_from_view: main__order_items
-  join_to_view: main__users
-  join_type: always_left
-  on_sql: ${main__order_items.user_id} = ${main__users.id}
-  relationship_type: assumed_many_to_one
-  join_to_view_as_label: OR Items
-
-- join_from_view: main__order_items
-  join_to_view: main__inventory_items
-  join_type: always_left
-  on_sql: |
-    ${main__order_items.inventory_item_id} = ${main__inventory_items.id} AND ${main__products.id} = ${main__inventory_items.product_id}
-  relationship_type: many_to_one

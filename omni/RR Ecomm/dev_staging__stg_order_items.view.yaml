@@ -1,9 +1,0 @@
-# Reference this view as dev_staging__stg_order_items
-measures:
-  count_last_year:
-    label: Count (Last Year)
-    aggregate_type: count
-    filters:
-      created_at:
-        date_offset_from_query: 1 year
-        cancel_query_filter: true
