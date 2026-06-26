@@ -35,7 +35,7 @@ ai_settings:
 
 # model layer edit test
 
-ignored_schemas: [ marts_prod, intermediate_prod ]
+#ignored_schemas: [ marts_prod, intermediate_prod ]
 
 #ignored_views: [ main.distribution_centers ]
 
