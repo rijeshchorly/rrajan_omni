@@ -1,4 +1,3 @@
-#default_numeric_locale: fr_FR
 dynamic_shared_extensions:
   - user_attribute: locale
     mappings:
