@@ -1,0 +1,34 @@
+base_view: main__order_items
+label: Order Items
+description: Analyze order items alongside user attributes, product details,
+  inventory, and order-level data.
+tags: [ ai_available ]
+
+fields:
+  [
+    all_views.*,
+    -main__order_items.delivered_at,
+    main__order_items.p50_sale_price,
+    main__order_items.p75_sale_price
+  ]
+default_row_limit: 2000
+default_filters:
+  main__users.country:
+    is: []
+  main__products.brand:
+    is: []
+  main__order_items.created_at:
+    is: this year
+
+joins:
+  main__users: {}
+  main__products: {}
+  main__inventory_items: {}
+  main__orders: {}
+
+skills:
+  top_customers:
+    label: Top Customers
+    description: Find the top 20 customers by total lifetime revenue. Include
+      customer name, total revenue, order count, and date of most recent order.
+      Sort by revenue descending.

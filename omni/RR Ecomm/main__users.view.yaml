@@ -1,0 +1,23 @@
+# Reference this view as main__users
+dimensions:
+  email_domain:
+    sql: SUBSTRING(${main__users.email}, COALESCE(CASE WHEN POSITION('@' IN
+      SUBSTRING(${main__users.email}, 1, LENGTH(${main__users.email}))) > 0 THEN
+      POSITION('@' IN SUBSTRING(${main__users.email}, 1,
+      LENGTH(${main__users.email}))) + (1 - 1) ELSE NULL END, 0) + 1,
+      COALESCE(LENGTH(${main__users.email}), 0) - COALESCE(CASE WHEN
+      POSITION('@' IN SUBSTRING(${main__users.email}, 1,
+      LENGTH(${main__users.email}))) > 0 THEN POSITION('@' IN
+      SUBSTRING(${main__users.email}, 1, LENGTH(${main__users.email}))) + (1 -
+      1) ELSE NULL END, 0))
+    label: Email Domain
+
+  full_name:
+    sql: CONCAT(COALESCE(CONCAT(COALESCE(${main__users.first_name}, ''), ' '), ''),
+      COALESCE(${main__users.last_name}, ''))
+    label: Full Name
+
+  street_name:
+    sql: REGEXP_EXTRACT(${main__users.street_address},
+      '^\d+\s+(.+?)(?:\s+(?:Apt|Suite|Ste|Unit|#).*)?$', 1)
+    label: Street Name

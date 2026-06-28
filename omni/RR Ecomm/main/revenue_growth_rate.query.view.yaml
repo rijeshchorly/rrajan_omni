@@ -1,0 +1,42 @@
+# Reference this view as revenue_growth_rate
+label: Revenue Growth Rate
+
+schema: main
+query:
+  fields:
+    main__order_items.created_at[month]: created_at_month
+    main__order_items.sale_price_sum: sale_price_sum
+    previous_month_revenue: previous_month_revenue
+    revenue_change: revenue_change
+    growth_rate: growth_rate
+  base_view: main__order_items
+  calculations:
+    previous_month_revenue:
+      sql: LAG(${main__order_items.sale_price_sum}) OVER (ORDER BY
+        ${main__order_items.created_at[month]})
+    revenue_change:
+      sql: ${main__order_items.sale_price_sum} -
+        (LAG(${main__order_items.sale_price_sum}) OVER (ORDER BY
+        ${main__order_items.created_at[month]}))
+    growth_rate:
+      sql: OMNI_FX_SAFE_DIVIDE(${main__order_items.sale_price_sum} -
+        (LAG(${main__order_items.sale_price_sum}) OVER (ORDER BY
+        ${main__order_items.created_at[month]})),
+        LAG(${main__order_items.sale_price_sum}) OVER (ORDER BY
+        ${main__order_items.created_at[month]}))
+  sorts:
+    - field: main__order_items.created_at[month]
+  topic: order_items
+
+dimensions:
+  sale_price_sum: {}
+  previous_month_revenue: {}
+  revenue_change: {}
+  growth_rate: {}
+
+  created_at_month:
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count

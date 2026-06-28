@@ -1,0 +1,8 @@
+# Reference this view as main__products
+dimensions:
+  retail_price_level_of_detail:
+    sql: ${main__products.retail_price}
+    label: Retail Price Level of Detail
+    level_of_detail:
+      aggregate_type: max
+      always_include: [ main__products.distribution_center_id ]

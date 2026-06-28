@@ -35,11 +35,9 @@ ai_settings:
 
 # model layer edit test
 
-ignored_schemas: [ marts_prod, intermediate_prod ]
+ignored_schemas: [ intermediate_prod ]
 
 #ignored_views: [ main.distribution_centers ]
-
-included_views: [ omni_dbt_intermediate_*, omni_dbt_marts_* ]
 
 ai_chat_topics: [ tag:ai_available ]
 
