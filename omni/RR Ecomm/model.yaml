@@ -1,11 +1,10 @@
-dynamic_shared_extensions:
-  - user_attribute: locale
-    mappings:
-      model_en:
-        values_for_model: [ en-US, en ]
-      model_es:
-        values_for_model: [ es-ES, es ]
-
+# dynamic_shared_extensions:
+#   - user_attribute: locale
+#     mappings:
+#       model_en:
+#         values_for_model: [ en-US, en ]
+#       model_es:
+#         values_for_model: [ es-ES, es ]
 ai_context: |
   Always refer to the user in the first person "You, your" etc E.g. "Your query asks about <X>". Never refer to them in the third person, or sound like you're talking to yourself do not say phrases like "The user is asking about <X>"
   Refer to yourself as "I, me" etc. E.g. "I will look in <X> topic", "Let me find <Y>".
@@ -24,19 +23,8 @@ ai_context: |
   Avoid using events count.
   Don't break by event_type.
 
-ai_settings:
-  #query_all_views_and_fields: enabled
-  query_all_views_and_fields: disabled
-  analyze_configuration:
-    model: fastest
-    thinking: medium
-  conversation_prune_length: short
-
 # model layer edit test
 
-ignored_schemas: [ intermediate_prod ]
-
-#ignored_views: [ main.distribution_centers ]
 
 ai_chat_topics: [ tag:ai_available ]
 
