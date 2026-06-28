@@ -1,0 +1,54 @@
+# Reference this view as prod_intermediate__int_order_items_enriched
+dimensions:
+  unit_cost: {}
+  _entity_order_item: {}
+  _entity_order: {}
+  _entity_user: {}
+  _entity_product: {}
+  _filter_total_cost: {}
+  _filter_total_units_sold: {}
+
+  _filter_total_revenue:
+    description: Intermediat filter dimension for measure total_revenue
+
+measures:
+  revenue:
+    aggregate_type: sum
+
+  cost:
+    aggregate_type: sum
+
+  units_sold:
+    aggregate_type: count
+
+  returned_units:
+    aggregate_type: sum
+
+  avg_days_to_deliver:
+    aggregate_type: average
+
+  total_revenue:
+    aggregate_type: sum
+    filters:
+      _filter_total_revenue:
+        is: true
+
+  total_cost:
+    aggregate_type: sum
+    filters:
+      _filter_total_cost:
+        is: true
+
+  return_rate:
+    # Measure is defined by the 'return_rate' dbt metric (models/marts/_metrics.yml)
+    sql: CAST(${total_returned_units} AS DOUBLE) / NULLIF(CAST(${total_units_sold}
+      AS DOUBLE), 0)
+
+  total_units_sold:
+    aggregate_type: count
+    filters:
+      _filter_total_units_sold:
+        is: true
+
+  total_returned_units:
+    aggregate_type: sum

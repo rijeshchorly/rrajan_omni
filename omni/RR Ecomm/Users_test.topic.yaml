@@ -1,0 +1,7 @@
+base_view: main__users
+label: Users
+description: Explore user profiles and attributes including demographics,
+  location, and acquisition source.
+tags: [ ai_available ]
+
+joins: {}

@@ -1,0 +1,7 @@
+# Reference this view as spend
+dimensions:
+  cf_13470:
+    sql: (SELECT JSON_VALUE(cf.json_value) FROM UNNEST(custom_fields) AS cf WHERE
+      cf.id = '13470' LIMIT 1)
+    label: Unit Price
+    group_label: Custom Fields
