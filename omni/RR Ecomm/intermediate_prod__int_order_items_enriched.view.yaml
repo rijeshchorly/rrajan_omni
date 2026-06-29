@@ -1,0 +1,66 @@
+# Reference this view as intermediate_prod__int_order_items_enriched
+dimensions:
+  _entity_order_item:
+    # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    {}
+  _entity_order:
+    # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    {}
+  _entity_user:
+    # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    {}
+  _entity_product:
+    # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    {}
+  _filter_total_revenue:
+    # Produced by the dbt semantic layer integration
+    {}
+  _filter_total_cost:
+    # Produced by the dbt semantic layer integration
+    {}
+  _filter_total_units_sold:
+    # Produced by the dbt semantic layer integration
+    {}
+
+measures:
+  revenue:
+    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    aggregate_type: sum
+
+  cost:
+    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    aggregate_type: sum
+
+  units_sold:
+    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    aggregate_type: count
+
+  returned_units:
+    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    aggregate_type: sum
+
+  total_revenue:
+    # Measure is defined by the 'total_revenue' dbt metric (models/marts/_metrics.yml)
+    aggregate_type: sum
+    filters:
+      _filter_total_revenue:
+        is: true
+
+  total_cost:
+    # Measure is defined by the 'total_cost' dbt metric (models/marts/_metrics.yml)
+    aggregate_type: sum
+    filters:
+      _filter_total_cost:
+        is: true
+
+  return_rate:
+    # Measure is defined by the 'return_rate' dbt metric (models/marts/_metrics.yml)
+    sql: CAST(${total_returned_units} AS DOUBLE) / NULLIF(CAST(${total_units_sold}
+      AS DOUBLE), 0)
+
+  total_units_sold:
+    # Measure is defined by the 'total_units_sold' dbt metric (models/marts/_metrics.yml)
+    aggregate_type: count
+    filters:
+      _filter_total_units_sold:
+        is: true

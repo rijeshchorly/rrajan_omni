@@ -1,0 +1,73 @@
+# Reference this view as omni_dbt_intermediate__int_order_items_enriched
+dimensions:
+  _entity_order_item: {}
+  _entity_order: {}
+  _entity_user: {}
+  _entity_product: {}
+  _filter_total_revenue: {}
+  _filter_total_cost: {}
+  _filter_total_units_sold: {}
+
+measures:
+  revenue:
+    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.sale_price}
+    aggregate_type: sum
+
+  cost:
+    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.unit_cost}
+    aggregate_type: sum
+
+  units_sold:
+    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.order_item_id}
+    aggregate_type: count
+
+  returned_units:
+    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+    sql: CASE WHEN ${omni_dbt_intermediate__int_order_items_enriched.is_returned}
+      THEN 1 ELSE 0 END
+    aggregate_type: sum
+
+  avg_days_to_deliver:
+    # Measure is defined by the 'avg_days_to_deliver' dbt metric (models/marts/_metrics.yml)
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.days_to_deliver}
+    aggregate_type: average
+
+  total_revenue:
+    # Measure is defined by the 'total_revenue' dbt metric (models/marts/_metrics.yml)
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.sale_price}
+    aggregate_type: sum
+    filters:
+      _filter_total_revenue:
+        is: true
+
+  total_cost:
+    # Measure is defined by the 'total_cost' dbt metric (models/marts/_metrics.yml)
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.unit_cost}
+    aggregate_type: sum
+    filters:
+      _filter_total_cost:
+        is: true
+
+  return_rate:
+    # Measure is defined by the 'return_rate' dbt metric (models/marts/_metrics.yml)
+    sql: CAST(${omni_dbt_intermediate__int_order_items_enriched.total_returned_units}
+      AS DOUBLE) /
+      NULLIF(CAST(${omni_dbt_intermediate__int_order_items_enriched.total_units_sold}
+      AS DOUBLE), 0)
+
+  total_units_sold:
+    # Measure is defined by the 'total_units_sold' dbt metric (models/marts/_metrics.yml)
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.order_item_id}
+    aggregate_type: count
+    filters:
+      _filter_total_units_sold:
+        is: true
+
+  total_returned_units:
+    # Measure is defined by the 'total_returned_units' dbt metric (models/marts/_metrics.yml)
+    sql: CASE WHEN ${omni_dbt_intermediate__int_order_items_enriched.is_returned}
+      THEN 1 ELSE 0 END
+    aggregate_type: sum
