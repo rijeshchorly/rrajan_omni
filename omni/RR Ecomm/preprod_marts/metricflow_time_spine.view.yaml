@@ -1,0 +1,10 @@
+# Reference this view as preprod_marts__metricflow_time_spine
+schema: preprod_marts
+table_name: metricflow_time_spine
+
+dimensions:
+  date_day: {}
+
+measures:
+  count:
+    aggregate_type: count
