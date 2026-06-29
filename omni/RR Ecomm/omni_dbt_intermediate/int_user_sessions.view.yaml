@@ -162,3 +162,4 @@ dbt:
     )
 
     select * from final
+  referenced_by: [ query_dbt ]
