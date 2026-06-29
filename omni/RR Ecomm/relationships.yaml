@@ -1,3 +1,63 @@
+# Relationship is defined in the 'orders' dbt semantic model (models/marts/_semantic_models.yml)
+- join_from_view: prod_intermediate__int_orders_with_metrics
+  join_to_view: prod_marts__mart_customer_ltv
+  join_type: always_left
+  on_sql: ${prod_intermediate__int_orders_with_metrics._entity_user} =
+    ${prod_marts__mart_customer_ltv._entity_user}
+  relationship_type: assumed_many_to_one
+
+# Relationship is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+- join_from_view: prod_intermediate__int_order_items_enriched
+  join_to_view: prod_intermediate__int_orders_with_metrics
+  join_type: always_left
+  on_sql: ${prod_intermediate__int_order_items_enriched._entity_order} =
+    ${prod_intermediate__int_orders_with_metrics._entity_order}
+  relationship_type: assumed_many_to_one
+
+# Relationship is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+- join_from_view: prod_intermediate__int_order_items_enriched
+  join_to_view: prod_marts__mart_customer_ltv
+  join_type: always_left
+  on_sql: ${prod_intermediate__int_order_items_enriched._entity_user} =
+    ${prod_marts__mart_customer_ltv._entity_user}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: main__inventory_items
+  join_to_view: main__products
+  join_type: always_left
+  on_sql: ${main__inventory_items.product_id} = ${main__products.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: main__order_items
+  join_to_view: main__products
+  join_type: always_left
+  on_sql: ${main__order_items.product_id} = ${main__products.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: main__orders
+  join_to_view: main__users
+  join_type: always_left
+  on_sql: ${main__orders.user_id} = ${main__users.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: main__orders_enriched
+  join_to_view: main__orders
+  join_type: always_left
+  on_sql: ${main__orders_enriched.order_id} = ${main__orders.order_id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: main__orders_enriched
+  join_to_view: main__users
+  join_type: always_left
+  on_sql: ${main__orders_enriched.user_id} = ${main__users.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: main__products
+  join_to_view: main__distribution_centers
+  join_type: always_left
+  on_sql: ${main__products.distribution_center_id} = ${main__distribution_centers.id}
+  relationship_type: assumed_many_to_one
+
 - join_from_view: main__order_items
   join_to_view: revenue_growth_rate
   join_type: always_left
@@ -27,6 +87,14 @@
   on_sql: ${prod_intermediate__int_session_events.user_id} =
     ${prod_intermediate__int_user_sessions.user_id}
   relationship_type: many_to_one
+
+# Relationship is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
+- join_from_view: omni_dbt_intermediate__int_order_items_enriched
+  join_to_view: omni_dbt_intermediate__int_orders_with_metrics
+  join_type: always_left
+  on_sql: ${omni_dbt_intermediate__int_order_items_enriched._entity_order} =
+    ${omni_dbt_intermediate__int_orders_with_metrics._entity_order}
+  relationship_type: assumed_many_to_one
 
 - join_from_view: main__order_items
   join_to_view: main__orders

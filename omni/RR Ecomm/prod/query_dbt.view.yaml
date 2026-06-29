@@ -1,0 +1,22 @@
+# Reference this view as prod__query_dbt
+schema: prod
+table_name: query_dbt
+
+dimensions:
+  dummy: {}
+
+measures:
+  count:
+    aggregate_type: count
+
+#The info below was pulled from your dbt repository and is read-only.
+dbt:
+  name: query_dbt
+  target_schema: prod
+  config:
+    materialized: view
+  code: |-
+    SELECT CAST(CAST(DATE_TRUNC('MONTH', "last_session_at") AS TIMESTAMP) AS TIMESTAMP) AS "last_session_at[month]",
+        "lifetime_gross_profit"
+    FROM {{ref('int_user_sessions')}} AS "intermediate_prod__int_user_sessions"
+    GROUP BY 1, 2

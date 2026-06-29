@@ -1,0 +1,16 @@
+# Reference this view as main__distribution_centers
+schema: main
+table_name: distribution_centers
+
+dimensions:
+  name: {}
+  latitude: {}
+  longitude: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count

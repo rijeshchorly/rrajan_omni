@@ -1,5 +1,23 @@
 # Reference this view as main__users
+schema: main
+table_name: users
+
 dimensions:
+  first_name: {}
+  last_name: {}
+  email: {}
+  age: {}
+  gender: {}
+  state: {}
+  street_address: {}
+  postal_code: {}
+  city: {}
+  country: {}
+  latitude: {}
+  longitude: {}
+  traffic_source: {}
+  created_at: {}
+
   email_domain:
     sql: SUBSTRING(${main__users.email}, COALESCE(CASE WHEN POSITION('@' IN
       SUBSTRING(${main__users.email}, 1, LENGTH(${main__users.email}))) > 0 THEN
@@ -21,3 +39,11 @@ dimensions:
     sql: REGEXP_EXTRACT(${main__users.street_address},
       '^\d+\s+(.+?)(?:\s+(?:Apt|Suite|Ste|Unit|#).*)?$', 1)
     label: Street Name
+
+  id:
+    format: ID
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count

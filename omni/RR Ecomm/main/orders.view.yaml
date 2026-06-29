@@ -1,0 +1,23 @@
+# Reference this view as main__orders
+schema: main
+table_name: orders
+
+dimensions:
+  status: {}
+  gender: {}
+  created_at: {}
+  returned_at: {}
+  shipped_at: {}
+  delivered_at: {}
+  num_of_item: {}
+
+  order_id:
+    format: ID
+    primary_key: true
+
+  user_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

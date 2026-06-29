@@ -1,0 +1,74 @@
+# Reference this view as omni_dbt_staging__stg_products
+schema_label: ""
+#This description was pulled from dbt.
+description: Cleaned product catalogue. One row per product.
+
+schema: omni_dbt_staging
+table_name: stg_products
+
+dimensions:
+  product_name: {}
+  product_category: {}
+  product_brand: {}
+  product_department: {}
+  product_sku: {}
+  retail_price: {}
+  cost: {}
+  gross_margin: {}
+  gross_margin_pct: {}
+
+  product_id:
+    format: ID
+
+  distribution_center_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count
+
+#The info below was pulled from your dbt repository and is read-only.
+dbt:
+  name: stg_products
+  target_schema: prod
+  description: Cleaned product catalogue. One row per product.
+  config:
+    schema: staging
+    materialized: view
+  code: |-
+    with products as (
+        select * from {{ source('Ecomm', 'products') }}
+    ),
+
+    stg_products as (
+        select
+            -- ids
+            id                          as product_id,
+
+            -- attributes
+            name                        as product_name,
+            category                    as product_category,
+            brand                       as product_brand,
+            department                  as product_department,
+            sku                         as product_sku,
+
+            -- pricing
+            retail_price,
+            cost,
+            round(retail_price - cost, 2)   as gross_margin,
+            round(
+                case when retail_price > 0
+                     then (retail_price - cost) / retail_price
+                     else null
+                end,
+                4
+            )                               as gross_margin_pct,
+
+            -- distribution
+            distribution_center_id
+
+        from products
+    )
+
+    select * from stg_products
+  referenced_by: [ int_order_items_enriched ]

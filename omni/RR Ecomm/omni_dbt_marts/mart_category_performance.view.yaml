@@ -1,0 +1,76 @@
+# Reference this view as omni_dbt_marts__mart_category_performance
+schema_label: ""
+
+schema: omni_dbt_marts
+table_name: mart_category_performance
+
+dimensions:
+  month: {}
+  product_category: {}
+  product_department: {}
+  units_sold: {}
+  orders: {}
+  unique_buyers: {}
+  revenue: {}
+  cost: {}
+  gross_profit: {}
+  gross_margin_pct: {}
+  returned_units: {}
+  return_rate: {}
+
+measures:
+  count:
+    aggregate_type: count
+
+#The info below was pulled from your dbt repository and is read-only.
+dbt:
+  name: mart_category_performance
+  target_schema: prod
+  config:
+    schema: marts
+    materialized: table
+  code: |-
+    /*
+      mart_category_performance
+      -------------------------
+      Monthly revenue and margin breakdown by product category.
+      Useful for identifying seasonal trends and category health.
+    */
+
+    with order_items as (
+        select * from {{ ref('int_order_items_enriched') }}
+        where status not in ('Cancelled')
+    ),
+
+    monthly_category as (
+        select
+            date_trunc('month', created_at)::date   as month,
+            product_category,
+            product_department,
+
+            count(order_item_id)                    as units_sold,
+            count(distinct order_id)                as orders,
+            count(distinct user_id)                 as unique_buyers,
+
+            round(sum(sale_price), 2)               as revenue,
+            round(sum(unit_cost), 2)                as cost,
+            round(sum(gross_profit), 2)             as gross_profit,
+            round(
+                sum(gross_profit) / nullif(sum(sale_price), 0),
+                4
+            )                                       as gross_margin_pct,
+
+            sum(case when is_returned then 1 else 0 end)    as returned_units,
+            round(
+                sum(case when is_returned then 1 else 0 end)::float
+                / nullif(count(order_item_id), 0),
+                4
+            )                                       as return_rate
+
+        from order_items
+        group by 1, 2, 3
+    )
+
+    select * from monthly_category
+    order by month, revenue desc
+  referenced_by: [ mart_category_performance_v2, mart_category_performance_v3 ]

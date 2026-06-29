@@ -1,5 +1,15 @@
 # Reference this view as main__order_items
+schema: main
+table_name: order_items
+
 dimensions:
+  status: {}
+  created_at: {}
+  shipped_at: {}
+  delivered_at: {}
+  returned_at: {}
+  sale_price: {}
+
   next_shipped_text:
     sql: STRFTIME(shipped_at, '%d.%m.%Y')
     markdown: "**{{main__order_items.next_shipped_text.value}}** —
@@ -15,6 +25,22 @@ dimensions:
       ${main__order_items.created_at[date]} ROWS BETWEEN 27 PRECEDING AND
       CURRENT ROW )
     label: Pct Total Revenue
+
+  id:
+    format: ID
+    primary_key: true
+
+  order_id:
+    format: ID
+
+  user_id:
+    format: ID
+
+  product_id:
+    format: ID
+
+  inventory_item_id:
+    format: ID
 
 measures:
   sale_price_sum:
@@ -93,3 +119,6 @@ measures:
   p50_sale_price:
     sql: PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY
       ${main__order_items.sale_price})
+
+  count:
+    aggregate_type: count
