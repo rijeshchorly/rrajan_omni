@@ -73,4 +73,3 @@ dbt:
 
     select * from monthly_category
     order by month, revenue desc
-  referenced_by: [ mart_category_performance_v2 ]
