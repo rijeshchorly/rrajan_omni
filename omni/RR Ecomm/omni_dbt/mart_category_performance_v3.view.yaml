@@ -1,5 +1,7 @@
-# Reference this view as prod_marts__mart_category_performance_v3
-schema: prod_marts
+# Reference this view as omni_dbt__mart_category_performance_v3
+schema_label: ""
+
+schema: omni_dbt
 table_name: mart_category_performance_v3
 
 dimensions:
