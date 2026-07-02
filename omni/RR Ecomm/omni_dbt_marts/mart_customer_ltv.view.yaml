@@ -37,6 +37,36 @@ dimensions:
     hidden: true
 
 measures:
+  total_lifetime_revenue:
+    sql: ${omni_dbt_marts__mart_customer_ltv.lifetime_revenue}
+    aggregate_type: sum
+
+  total_lifetime_gross_profit:
+    sql: ${omni_dbt_marts__mart_customer_ltv.lifetime_gross_profit}
+    aggregate_type: sum
+
+  avg_lifetime_revenue:
+    sql: ${omni_dbt_marts__mart_customer_ltv.lifetime_revenue}
+    aggregate_type: average
+
+  avg_order_value_measure:
+    sql: ${omni_dbt_marts__mart_customer_ltv.avg_order_value}
+    label: Avg Order Value
+    aggregate_type: average
+
+  total_lifetime_orders:
+    sql: ${omni_dbt_marts__mart_customer_ltv.lifetime_orders}
+    aggregate_type: sum
+
+  avg_days_customer_active:
+    sql: ${omni_dbt_marts__mart_customer_ltv.days_customer_active}
+    aggregate_type: average
+
+  total_returned_items_sum:
+    sql: ${omni_dbt_marts__mart_customer_ltv.total_returned_items}
+    label: Total Returned Items
+    aggregate_type: sum
+
   count:
     aggregate_type: count
 

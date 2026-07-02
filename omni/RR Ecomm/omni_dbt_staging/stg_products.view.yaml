@@ -1,5 +1,6 @@
 # Reference this view as omni_dbt_staging__stg_products
 schema_label: ""
+display_order: 2
 #This description was pulled from dbt.
 description: Cleaned product catalogue. One row per product.
 
