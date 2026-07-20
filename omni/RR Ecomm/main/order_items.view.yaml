@@ -122,3 +122,18 @@ measures:
 
   count:
     aggregate_type: count
+
+  returned_items:
+    sql: ${main__order_items.id}
+    label: Returned Items
+    aggregate_type: count_distinct
+    filters:
+      returned_at:
+        not: null
+
+  return_rate:
+    sql: CASE WHEN ${main__order_items.id_count_distinct} = 0 THEN NULL ELSE
+      COALESCE(${main__order_items.returned_items}, 0) /
+      ${main__order_items.id_count_distinct} END
+    label: Return Rate
+    format: PERCENT_2
