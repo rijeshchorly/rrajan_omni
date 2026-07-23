@@ -5,3 +5,4 @@ description: Explore user profiles and attributes including demographics,
 tags: [ ai_available ]
 
 joins: {}
+# this is the users view
