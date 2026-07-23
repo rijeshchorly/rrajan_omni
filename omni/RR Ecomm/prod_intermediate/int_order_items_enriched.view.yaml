@@ -30,30 +30,25 @@ dimensions:
 
   _entity_order_item:
     # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-    # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
     sql: ${order_item_id}
     hidden: true
 
   _entity_order:
-    # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
     # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
     sql: ${order_id}
     hidden: true
 
   _entity_user:
     # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-    # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
     sql: ${user_id}
     hidden: true
 
   _entity_product:
     # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-    # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
     sql: ${product_id}
     hidden: true
 
   _filter_total_cost:
-    # Produced by the dbt semantic layer integration
     # Produced by the dbt semantic layer integration
     sql: ${status} <> 'Cancelled'
     description: Intermediate filter dimension for measure total_cost
@@ -61,13 +56,11 @@ dimensions:
 
   _filter_total_units_sold:
     # Produced by the dbt semantic layer integration
-    # Produced by the dbt semantic layer integration
     sql: ${status} <> 'Cancelled'
     description: Intermediate filter dimension for measure total_units_sold
     hidden: true
 
   _filter_total_revenue:
-    # Produced by the dbt semantic layer integration
     # Produced by the dbt semantic layer integration
     sql: ${status} <> 'Cancelled'
     description: Intermediat filter dimension for measure total_revenue
@@ -95,13 +88,11 @@ dimensions:
 measures:
   revenue:
     # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
     sql: ${sale_price}
     description: Sum of sale price across order items
     aggregate_type: sum
 
   cost:
-    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
     # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
     sql: ${unit_cost}
     description: Sum of unit cost across order items
@@ -109,13 +100,11 @@ measures:
 
   units_sold:
     # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
     sql: ${order_item_id}
     description: Count of order items RR
     aggregate_type: count
 
   returned_units:
-    # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
     # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
     sql: CASE WHEN ${is_returned} THEN 1 ELSE 0 END
     description: Count of returned order items
@@ -123,14 +112,12 @@ measures:
 
   avg_days_to_deliver:
     # Measure is defined by the 'avg_days_to_deliver' dbt metric (models/marts/_metrics.yml)
-    # Measure is defined by the 'avg_days_to_deliver' dbt metric (models/marts/_metrics.yml)
     sql: ${days_to_deliver}
     label: Avg Days to Deliver
     description: Average number of days from shipment to delivery
     aggregate_type: average
 
   total_revenue:
-    # Measure is defined by the 'total_revenue' dbt metric (models/marts/_metrics.yml)
     # Measure is defined by the 'total_revenue' dbt metric (models/marts/_metrics.yml)
     sql: ${sale_price}
     label: Total Revenue
@@ -142,7 +129,6 @@ measures:
 
   total_cost:
     # Measure is defined by the 'total_cost' dbt metric (models/marts/_metrics.yml)
-    # Measure is defined by the 'total_cost' dbt metric (models/marts/_metrics.yml)
     sql: ${unit_cost}
     label: Total Cost
     description: Sum of unit cost across all non-cancelled order items
@@ -153,14 +139,12 @@ measures:
 
   return_rate:
     # Measure is defined by the 'return_rate' dbt metric (models/marts/_metrics.yml)
-    # Measure is defined by the 'return_rate' dbt metric (models/marts/_metrics.yml)
     sql: CAST(${total_returned_units} AS DOUBLE) / NULLIF(CAST(${total_units_sold}
       AS DOUBLE), 0)
     label: Return Rate
     description: Ratio of returned units to total non-cancelled units sold
 
   total_units_sold:
-    # Measure is defined by the 'total_units_sold' dbt metric (models/marts/_metrics.yml)
     # Measure is defined by the 'total_units_sold' dbt metric (models/marts/_metrics.yml)
     sql: ${order_item_id}
     label: Total Units Sold
@@ -171,7 +155,6 @@ measures:
         is: true
 
   total_returned_units:
-    # Measure is defined by the 'total_returned_units' dbt metric (models/marts/_metrics.yml)
     # Measure is defined by the 'total_returned_units' dbt metric (models/marts/_metrics.yml)
     sql: CASE WHEN ${is_returned} THEN 1 ELSE 0 END
     label: Total Returned Units

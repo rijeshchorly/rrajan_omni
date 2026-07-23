@@ -1,10 +1,7 @@
 # Reference this view as marts_prod__mart_customer_ltv
 dimensions:
-  _entity_user:
-    # Entity is defined in the 'customers' dbt semantic model (models/marts/_semantic_models.yml)
-    {}
+  _entity_user: {}
 
 measures:
   customer_count:
-    # Measure is defined in the 'customers' dbt semantic model (models/marts/_semantic_models.yml)
     aggregate_type: count_distinct
