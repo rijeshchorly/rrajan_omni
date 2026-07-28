@@ -1,3 +1,5 @@
+owners: [ rijesh@omni.co ]
+
 base_view: main__order_items
 label: Order Items
 description: Analyze order items alongside user attributes, product details,
