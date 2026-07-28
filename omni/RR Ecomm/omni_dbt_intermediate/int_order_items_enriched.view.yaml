@@ -156,7 +156,7 @@ measures:
     sql: ${omni_dbt_intermediate__int_order_items_enriched.unit_cost}
     label: Avg Unit Cost
     format: usdcurrency_2
-    description: Average unit cost across order items
+    #description: Average unit cost across order items
     aggregate_type: average
 
 #The info below was pulled from your dbt repository and is read-only.
