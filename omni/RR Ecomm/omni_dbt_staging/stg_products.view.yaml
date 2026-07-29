@@ -1,9 +1,10 @@
-# Reference this view as prod_staging__stg_products
+# Reference this view as omni_dbt_staging__stg_products
+schema_label: ""
 display_order: 2
 #This description was pulled from dbt.
 description: Cleaned product catalogue. One row per product.
 
-schema: prod_staging
+schema: omni_dbt_staging
 table_name: stg_products
 
 dimensions:

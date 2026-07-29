@@ -1,0 +1,12 @@
+# Reference this view as dev__query_dbt
+hidden: true
+
+schema: dev
+table_name: query_dbt
+
+dimensions:
+  dummy: {}
+
+measures:
+  count:
+    aggregate_type: count

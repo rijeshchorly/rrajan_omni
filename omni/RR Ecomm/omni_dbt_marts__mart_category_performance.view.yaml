@@ -1,9 +1,0 @@
-# Reference this view as omni_dbt_marts__mart_category_performance
-measures:
-  cost_sum:
-    sql: ${omni_dbt_marts__mart_category_performance.cost}
-    aggregate_type: sum
-
-  orders_count_distinct:
-    sql: ${omni_dbt_marts__mart_category_performance.orders}
-    aggregate_type: count_distinct

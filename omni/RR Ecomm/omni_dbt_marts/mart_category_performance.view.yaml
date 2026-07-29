@@ -1,5 +1,7 @@
-# Reference this view as prod_marts__mart_category_performance
-schema: prod_marts
+# Reference this view as omni_dbt_marts__mart_category_performance
+schema_label: ""
+
+schema: omni_dbt_marts
 table_name: mart_category_performance
 
 dimensions:
@@ -18,11 +20,11 @@ dimensions:
 
 measures:
   cost_sum:
-    sql: ${prod_marts__mart_category_performance.cost}
+    sql: ${omni_dbt_marts__mart_category_performance.cost}
     aggregate_type: sum
 
   orders_count_distinct:
-    sql: ${prod_marts__mart_category_performance.orders}
+    sql: ${omni_dbt_marts__mart_category_performance.orders}
     aggregate_type: count_distinct
 
   count:

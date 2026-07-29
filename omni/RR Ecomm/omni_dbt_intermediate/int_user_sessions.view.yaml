@@ -1,9 +1,10 @@
-# Reference this view as prod_intermediate__int_user_sessions
+# Reference this view as omni_dbt_intermediate__int_user_sessions
+schema_label: ""
 #This description was pulled from dbt.
 description: |
   One row per user with web-session behaviour aggregated alongside lifetime purchase history. Bridges sessions and orders so downstream marts can compare acquisition source against customer value.
 
-schema: prod_intermediate
+schema: omni_dbt_intermediate
 table_name: int_user_sessions
 
 dimensions:

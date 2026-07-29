@@ -1,7 +1,8 @@
-# Reference this view as prod_marts__mart_customer_ltv
+# Reference this view as omni_dbt_marts__mart_customer_ltv
 label: Customers
+schema_label: ""
 
-schema: prod_marts
+schema: omni_dbt_marts
 table_name: mart_customer_ltv
 
 dimensions:
@@ -32,37 +33,37 @@ dimensions:
 
   _entity_user:
     # Entity is defined in the 'customers' dbt semantic model (models/marts/_semantic_models.yml)
-    sql: ${user_id}
+    sql: ${omni_dbt_marts__mart_customer_ltv.user_id}
     hidden: true
 
 measures:
   total_lifetime_revenue:
-    sql: ${prod_marts__mart_customer_ltv.lifetime_revenue}
+    sql: ${omni_dbt_marts__mart_customer_ltv.lifetime_revenue}
     aggregate_type: sum
 
   total_lifetime_gross_profit:
-    sql: ${prod_marts__mart_customer_ltv.lifetime_gross_profit}
+    sql: ${omni_dbt_marts__mart_customer_ltv.lifetime_gross_profit}
     aggregate_type: sum
 
   avg_lifetime_revenue:
-    sql: ${prod_marts__mart_customer_ltv.lifetime_revenue}
+    sql: ${omni_dbt_marts__mart_customer_ltv.lifetime_revenue}
     aggregate_type: average
 
   avg_order_value_measure:
-    sql: ${prod_marts__mart_customer_ltv.avg_order_value}
+    sql: ${omni_dbt_marts__mart_customer_ltv.avg_order_value}
     label: Avg Order Value
     aggregate_type: average
 
   total_lifetime_orders:
-    sql: ${prod_marts__mart_customer_ltv.lifetime_orders}
+    sql: ${omni_dbt_marts__mart_customer_ltv.lifetime_orders}
     aggregate_type: sum
 
   avg_days_customer_active:
-    sql: ${prod_marts__mart_customer_ltv.days_customer_active}
+    sql: ${omni_dbt_marts__mart_customer_ltv.days_customer_active}
     aggregate_type: average
 
   total_returned_items_sum:
-    sql: ${prod_marts__mart_customer_ltv.total_returned_items}
+    sql: ${omni_dbt_marts__mart_customer_ltv.total_returned_items}
     label: Total Returned Items
     aggregate_type: sum
 
@@ -71,13 +72,13 @@ measures:
 
   customer_count:
     # Measure is defined in the 'customers' dbt semantic model (models/marts/_semantic_models.yml)
-    sql: ${user_id}
+    sql: ${omni_dbt_marts__mart_customer_ltv.user_id}
     description: Count of distinct customers
     aggregate_type: count_distinct
 
   total_customers:
     # Measure is defined by the 'total_customers' dbt metric (models/marts/_metrics.yml)
-    sql: ${user_id}
+    sql: ${omni_dbt_marts__mart_customer_ltv.user_id}
     label: Total Customers
     description: Count of distinct registered customers
     aggregate_type: count_distinct

@@ -1,8 +1,9 @@
-# Reference this view as prod_staging__stg_order_items
+# Reference this view as omni_dbt_staging__stg_order_items
+schema_label: ""
 #This description was pulled from dbt.
 description: Cleaned order line items. One row per item within an order.
 
-schema: prod_staging
+schema: omni_dbt_staging
 table_name: stg_order_items
 
 dimensions:

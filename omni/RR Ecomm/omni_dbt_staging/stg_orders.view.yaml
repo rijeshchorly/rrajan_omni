@@ -1,8 +1,9 @@
-# Reference this view as prod_staging__stg_orders
+# Reference this view as omni_dbt_staging__stg_orders
+schema_label: ""
 #This description was pulled from dbt.
 description: Cleaned and renamed orders. One row per order.
 
-schema: prod_staging
+schema: omni_dbt_staging
 table_name: stg_orders
 
 dimensions:

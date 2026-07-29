@@ -1,9 +1,10 @@
-# Reference this view as prod_staging__stg_events
+# Reference this view as omni_dbt_staging__stg_events
+schema_label: ""
 display_order: 1
 #This description was pulled from dbt.
 description: Web-session events. One row per event.
 
-schema: prod_staging
+schema: omni_dbt_staging
 table_name: stg_events
 
 dimensions:

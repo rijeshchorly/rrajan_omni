@@ -1,0 +1,27 @@
+# Reference this view as dev_staging__stg_users
+schema: dev_staging
+table_name: stg_users
+
+dimensions:
+  first_name: {}
+  last_name: {}
+  full_name: {}
+  email: {}
+  age: {}
+  gender: {}
+  city: {}
+  state: {}
+  country: {}
+  postal_code: {}
+  street_address: {}
+  latitude: {}
+  longitude: {}
+  traffic_source: {}
+  created_at: {}
+
+  user_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

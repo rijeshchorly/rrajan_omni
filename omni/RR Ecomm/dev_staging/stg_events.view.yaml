@@ -1,0 +1,28 @@
+# Reference this view as dev_staging__stg_events
+schema: dev_staging
+table_name: stg_events
+
+dimensions:
+  sequence_number: {}
+  event_type: {}
+  uri: {}
+  city: {}
+  state: {}
+  postal_code: {}
+  ip_address: {}
+  browser: {}
+  traffic_source: {}
+  created_at: {}
+
+  event_id:
+    format: ID
+
+  user_id:
+    format: ID
+
+  session_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

@@ -1,9 +1,10 @@
-# Reference this view as prod_intermediate__int_user_order_history
+# Reference this view as omni_dbt_intermediate__int_user_order_history
+schema_label: ""
 #This description was pulled from dbt.
 description: |
   One row per registered user. Combines user attributes with their full lifetime purchase history and a simple RFM-style segment bucket.
 
-schema: prod_intermediate
+schema: omni_dbt_intermediate
 table_name: int_user_order_history
 
 dimensions:

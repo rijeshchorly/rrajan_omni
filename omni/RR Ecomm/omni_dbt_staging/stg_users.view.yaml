@@ -1,8 +1,9 @@
-# Reference this view as prod_staging__stg_users
+# Reference this view as omni_dbt_staging__stg_users
+schema_label: ""
 #This description was pulled from dbt.
 description: Cleaned customer accounts. One row per user.
 
-schema: prod_staging
+schema: omni_dbt_staging
 table_name: stg_users
 
 dimensions:

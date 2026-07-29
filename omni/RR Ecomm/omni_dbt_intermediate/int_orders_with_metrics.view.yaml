@@ -1,10 +1,11 @@
-# Reference this view as prod_intermediate__int_orders_with_metrics
+# Reference this view as omni_dbt_intermediate__int_orders_with_metrics
 label: Orders
+schema_label: ""
 #This description was pulled from dbt.
 description: |
   Order header enriched with aggregated line-item metrics (revenue, cost, gross profit, fulfilment timing). One row per order.
 
-schema: prod_intermediate
+schema: omni_dbt_intermediate
 table_name: int_orders_with_metrics
 
 dimensions:
@@ -34,18 +35,15 @@ dimensions:
     format: ID
 
   _entity_order:
-    # Entity is defined in the 'orders' dbt semantic model (models/marts/_semantic_models.yml)
-    sql: ${order_id}
+    sql: ${omni_dbt_intermediate__int_orders_with_metrics.order_id}
     hidden: true
 
   _entity_user:
-    # Entity is defined in the 'orders' dbt semantic model (models/marts/_semantic_models.yml)
-    sql: ${user_id}
+    sql: ${omni_dbt_intermediate__int_orders_with_metrics.user_id}
     hidden: true
 
   _filter_total_orders:
-    # Produced by the dbt semantic layer integration
-    sql: ${status} <> 'Cancelled'
+    sql: ${omni_dbt_intermediate__int_orders_with_metrics.status} <> 'Cancelled'
     description: Intermediate filter dimension for measure total_orders
     hidden: true
 
@@ -54,14 +52,18 @@ measures:
     aggregate_type: count
 
   order_count:
-    # Measure is defined in the 'orders' dbt semantic model (models/marts/_semantic_models.yml)
-    sql: ${order_id}
+    sql: ${omni_dbt_intermediate__int_orders_with_metrics.order_id}
     description: Count of distinct orders
     aggregate_type: count_distinct
 
+  avg_order_value:
+    sql: CAST(${omni_dbt_intermediate__int_order_items_enriched.total_revenue} AS
+      DOUBLE) /
+      NULLIF(CAST(${omni_dbt_intermediate__int_orders_with_metrics.total_orders}
+      AS DOUBLE), 0)
+
   total_orders:
-    # Measure is defined by the 'total_orders' dbt metric (models/marts/_metrics.yml)
-    sql: ${order_id}
+    sql: ${omni_dbt_intermediate__int_orders_with_metrics.order_id}
     label: Total Orders
     description: Count of distinct orders excluding cancelled
     aggregate_type: count_distinct

@@ -1,8 +1,9 @@
-# Reference this view as prod_marts__metricflow_time_spine
+# Reference this view as omni_dbt_marts__metricflow_time_spine
+schema_label: ""
 #This description was pulled from dbt.
 description: Date spine table required by MetricFlow for time-series metric queries
 
-schema: prod_marts
+schema: omni_dbt_marts
 table_name: metricflow_time_spine
 
 dimensions:

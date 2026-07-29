@@ -1,9 +1,10 @@
-# Reference this view as prod_intermediate__int_session_events
+# Reference this view as omni_dbt_intermediate__int_session_events
+schema_label: ""
 #This description was pulled from dbt.
 description: |
   Web events rolled up to session level with funnel-step counts and a conversion flag. One row per session.
 
-schema: prod_intermediate
+schema: omni_dbt_intermediate
 table_name: int_session_events
 
 dimensions:
@@ -34,33 +35,33 @@ measures:
     aggregate_type: count
 
   converted_sessions:
-    sql: ${prod_intermediate__int_session_events.converted}
+    sql: ${omni_dbt_intermediate__int_session_events.converted}
     aggregate_type: sum
 
   conversion_rate:
-    sql: ${prod_intermediate__int_session_events.converted_sessions} /
-      NULLIF(${prod_intermediate__int_session_events.total_sessions}, 0)
+    sql: ${omni_dbt_intermediate__int_session_events.converted_sessions} /
+      NULLIF(${omni_dbt_intermediate__int_session_events.total_sessions}, 0)
     format: percent_2
 
   avg_session_duration:
-    sql: ${prod_intermediate__int_session_events.session_duration_minutes}
+    sql: ${omni_dbt_intermediate__int_session_events.session_duration_minutes}
     label: Avg Session Duration (min)
     aggregate_type: average
 
   total_product_views:
-    sql: ${prod_intermediate__int_session_events.product_views}
+    sql: ${omni_dbt_intermediate__int_session_events.product_views}
     aggregate_type: sum
 
   total_purchase_events:
-    sql: ${prod_intermediate__int_session_events.purchase_events}
+    sql: ${omni_dbt_intermediate__int_session_events.purchase_events}
     aggregate_type: sum
 
   total_cart_events:
-    sql: ${prod_intermediate__int_session_events.cart_events}
+    sql: ${omni_dbt_intermediate__int_session_events.cart_events}
     aggregate_type: sum
 
   total_cancel_events:
-    sql: ${prod_intermediate__int_session_events.cancel_events}
+    sql: ${omni_dbt_intermediate__int_session_events.cancel_events}
     aggregate_type: sum
 
   count:

@@ -1,8 +1,9 @@
-# Reference this view as prod_staging__stg_inventory_items
+# Reference this view as omni_dbt_staging__stg_inventory_items
+schema_label: ""
 #This description was pulled from dbt.
 description: Individual inventory units. One row per physical item.
 
-schema: prod_staging
+schema: omni_dbt_staging
 table_name: stg_inventory_items
 
 dimensions:

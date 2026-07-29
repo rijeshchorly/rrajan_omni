@@ -1,8 +1,9 @@
-# Reference this view as prod_staging__stg_distribution_centers
+# Reference this view as omni_dbt_staging__stg_distribution_centers
+schema_label: ""
 #This description was pulled from dbt.
 description: Physical distribution centres. One row per centre.
 
-schema: prod_staging
+schema: omni_dbt_staging
 table_name: stg_distribution_centers
 
 dimensions:
