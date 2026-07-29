@@ -1,6 +1,6 @@
-# Reference this view as preprod_intermediate__int_order_items_enriched
+# Reference this view as preprod_intermediate__int_order__items_enriched
 schema: preprod_intermediate
-table_name: int_order_items_enriched
+table_name: int_order__items_enriched
 
 dimensions:
   status: {}
