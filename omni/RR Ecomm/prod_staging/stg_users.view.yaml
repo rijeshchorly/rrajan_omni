@@ -1,7 +1,4 @@
 # Reference this view as prod_staging__stg_users
-#This description was pulled from dbt.
-description: Cleaned customer accounts. One row per user.
-
 schema: prod_staging
 table_name: stg_users
 
@@ -28,50 +25,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-#The info below was pulled from your dbt repository and is read-only.
-dbt:
-  name: stg_users
-  target_schema: prod
-  description: Cleaned customer accounts. One row per user.
-  config:
-    schema: staging
-    materialized: view
-  code: |-
-    with users as (
-        select * from {{ source('Ecomm', 'users') }}
-    ),
-
-    stg_users as (
-        select
-            -- ids
-            id              as user_id,
-
-            -- personal attributes
-            first_name,
-            last_name,
-            first_name || ' ' || last_name  as full_name,
-            email,
-            age,
-            gender,
-
-            -- location
-            city,
-            state,
-            country,
-            postal_code,
-            street_address,
-            latitude,
-            longitude,
-
-            -- acquisition
-            traffic_source,
-
-            -- timestamps
-            created_at
-
-        from users
-    )
-
-    select * from stg_users
-  referenced_by: [ int_user_order_history ]

@@ -1,0 +1,72 @@
+# Reference this view as omni_dbt_intermediate__int_order_items_enriched
+dimensions:
+  _entity_order_item: {}
+  _entity_order: {}
+  _entity_user: {}
+  _entity_product: {}
+  _filter_total_cost: {}
+  _filter_total_units_sold: {}
+
+  _filter_total_revenue:
+    description: Intermediat filter dimension for measure total_revenue
+
+measures:
+  revenue:
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.sale_price}
+    aggregate_type: sum
+
+  cost:
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.unit_cost}
+    aggregate_type: sum
+
+  units_sold:
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.order_item_id}
+    aggregate_type: count
+
+  returned_units:
+    sql: CASE WHEN ${omni_dbt_intermediate__int_order_items_enriched.is_returned}
+      THEN 1 ELSE 0 END
+    aggregate_type: sum
+
+  avg_days_to_deliver:
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.days_to_deliver}
+    aggregate_type: average
+
+  total_revenue:
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.sale_price}
+    aggregate_type: sum
+    filters:
+      _filter_total_revenue:
+        is: true
+
+  total_cost:
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.unit_cost}
+    aggregate_type: sum
+    filters:
+      _filter_total_cost:
+        is: true
+
+  return_rate:
+    sql: CAST(${omni_dbt_intermediate__int_order_items_enriched.total_returned_units}
+      AS DOUBLE) /
+      NULLIF(CAST(${omni_dbt_intermediate__int_order_items_enriched.total_units_sold}
+      AS DOUBLE), 0)
+
+  total_units_sold:
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.order_item_id}
+    aggregate_type: count
+    filters:
+      _filter_total_units_sold:
+        is: true
+
+  total_returned_units:
+    sql: CASE WHEN ${omni_dbt_intermediate__int_order_items_enriched.is_returned}
+      THEN 1 ELSE 0 END
+    aggregate_type: sum
+
+  avg_unit_cost:
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.unit_cost}
+    label: Avg Unit Cost
+    format: usdcurrency_2
+    #description: Average unit cost across order items
+    aggregate_type: average
