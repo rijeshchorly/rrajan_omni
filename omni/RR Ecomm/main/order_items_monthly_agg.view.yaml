@@ -1,0 +1,18 @@
+# Reference this view as main__order_items_monthly_agg
+schema: main
+table_name: order_items_monthly_agg
+
+dimensions:
+  created_at_month: {}
+  status: {}
+  category: {}
+  country: {}
+  total_sale_price: {}
+  order_items_count: {}
+  distinct_order_count: {}
+  cancelled_items: {}
+  returned_items: {}
+
+measures:
+  count:
+    aggregate_type: count
