@@ -1,5 +1,7 @@
 base_view: revenue_growth_rate
 label: Revenue Growth Rate
 
+#comment
+
 joins:
   main__order_items: {}
