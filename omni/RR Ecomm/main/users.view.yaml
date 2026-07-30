@@ -1,6 +1,7 @@
 # Reference this view as main__users
 schema: main
 table_name: users
+
 #comment
 dimensions:
   first_name: {}
