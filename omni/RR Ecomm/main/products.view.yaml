@@ -1,7 +1,7 @@
 # Reference this view as main__products
 schema: main
 table_name: products
-#comment
+
 dimensions:
   cost: {}
   category: {}
