@@ -1,7 +1,7 @@
 # Reference this view as main__inventory_items
 schema: main
 table_name: inventory_items
-
+#comment
 dimensions:
   created_at: {}
   sold_at: {}
