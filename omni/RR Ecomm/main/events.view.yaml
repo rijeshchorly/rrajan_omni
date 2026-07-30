@@ -1,7 +1,7 @@
 # Reference this view as main__events
 schema: main
 table_name: events
-
+#comment
 dimensions:
   sequence_number: {}
   created_at: {}
