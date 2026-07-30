@@ -1,6 +1,6 @@
 # Reference this view as revenue_growth_rate
 label: Revenue Growth Rate
-
+#comment
 schema: main
 query:
   fields:
