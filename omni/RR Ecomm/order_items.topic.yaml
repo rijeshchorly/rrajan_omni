@@ -11,7 +11,8 @@ fields:
     all_views.*,
     -main__order_items.delivered_at,
     main__order_items.p50_sale_price,
-    main__order_items.p75_sale_price
+    main__order_items.p75_sale_price,
+    -main__inventory_items.product_id
   ]
 default_row_limit: 2000
 default_filters:
