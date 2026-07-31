@@ -1,7 +1,7 @@
 # Reference this view as preprod_marts__mart_daily_revenue
 schema: preprod_marts
 table_name: mart_daily_revenue
-
+#comment
 dimensions:
   order_date: {}
   order_month: {}
