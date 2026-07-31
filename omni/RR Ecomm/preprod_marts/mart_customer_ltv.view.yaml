@@ -1,6 +1,7 @@
 # Reference this view as preprod_marts__mart_customer_ltv
 schema: preprod_marts
 table_name: mart_customer_ltv
+
 #comment
 dimensions:
   full_name: {}
