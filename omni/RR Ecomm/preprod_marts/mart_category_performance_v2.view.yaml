@@ -1,7 +1,7 @@
 # Reference this view as preprod_marts__mart_category_performance_v2
 schema: preprod_marts
 table_name: mart_category_performance_v2
-
+#comment
 dimensions:
   month: {}
   product_category: {}
