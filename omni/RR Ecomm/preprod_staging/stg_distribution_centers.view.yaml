@@ -1,6 +1,7 @@
 # Reference this view as preprod_staging__stg_distribution_centers
 schema: preprod_staging
 table_name: stg_distribution_centers
+
 #comment
 dimensions:
   distribution_center_name: {}
