@@ -1,7 +1,7 @@
 # Reference this view as preprod_staging__stg_events
 schema: preprod_staging
 table_name: stg_events
-
+#comment
 dimensions:
   sequence_number: {}
   event_type: {}
