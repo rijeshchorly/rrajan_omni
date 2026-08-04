@@ -1,10 +1,11 @@
-# Reference this view as prod_intermediate__int_order_items_enriched
+# Reference this view as omni_dbt_intermediate__int_order_items_enriched
 label: Order Items
+schema_label: ""
 #This description was pulled from dbt.
 description: |
   Order line items joined with product catalogue and inventory cost data. Core grain for all revenue and margin calculations. One row per order item.
 
-schema: prod_intermediate
+schema: omni_dbt_intermediate
 table_name: int_order_items_enriched
 
 dimensions:
@@ -30,39 +31,39 @@ dimensions:
 
   _entity_order_item:
     # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-    sql: ${order_item_id}
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.order_item_id}
     hidden: true
 
   _entity_order:
     # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-    sql: ${order_id}
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.order_id}
     hidden: true
 
   _entity_user:
     # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-    sql: ${user_id}
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.user_id}
     hidden: true
 
   _entity_product:
     # Entity is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-    sql: ${product_id}
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.product_id}
     hidden: true
 
   _filter_total_cost:
     # Produced by the dbt semantic layer integration
-    sql: ${status} <> 'Cancelled'
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.status} <> 'Cancelled'
     description: Intermediate filter dimension for measure total_cost
     hidden: true
 
   _filter_total_units_sold:
     # Produced by the dbt semantic layer integration
-    sql: ${status} <> 'Cancelled'
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.status} <> 'Cancelled'
     description: Intermediate filter dimension for measure total_units_sold
     hidden: true
 
   _filter_total_revenue:
     # Produced by the dbt semantic layer integration
-    sql: ${status} <> 'Cancelled'
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.status} <> 'Cancelled'
     description: Intermediat filter dimension for measure total_revenue
     hidden: true
 
@@ -88,38 +89,39 @@ dimensions:
 measures:
   revenue:
     # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-    sql: ${sale_price}
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.sale_price}
     description: Sum of sale price across order items
     aggregate_type: sum
 
   cost:
     # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-    sql: ${unit_cost}
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.unit_cost}
     description: Sum of unit cost across order items
     aggregate_type: sum
 
   units_sold:
     # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-    sql: ${order_item_id}
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.order_item_id}
     description: Count of order items RR
     aggregate_type: count
 
   returned_units:
     # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
-    sql: CASE WHEN ${is_returned} THEN 1 ELSE 0 END
+    sql: CASE WHEN ${omni_dbt_intermediate__int_order_items_enriched.is_returned}
+      THEN 1 ELSE 0 END
     description: Count of returned order items
     aggregate_type: sum
 
   avg_days_to_deliver:
     # Measure is defined by the 'avg_days_to_deliver' dbt metric (models/marts/_metrics.yml)
-    sql: ${days_to_deliver}
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.days_to_deliver}
     label: Avg Days to Deliver
     description: Average number of days from shipment to delivery
     aggregate_type: average
 
   total_revenue:
     # Measure is defined by the 'total_revenue' dbt metric (models/marts/_metrics.yml)
-    sql: ${sale_price}
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.sale_price}
     label: Total Revenue
     description: Sum of sale price across all non-cancelled order items
     aggregate_type: sum
@@ -129,7 +131,7 @@ measures:
 
   total_cost:
     # Measure is defined by the 'total_cost' dbt metric (models/marts/_metrics.yml)
-    sql: ${unit_cost}
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.unit_cost}
     label: Total Cost
     description: Sum of unit cost across all non-cancelled order items
     aggregate_type: sum
@@ -139,14 +141,16 @@ measures:
 
   return_rate:
     # Measure is defined by the 'return_rate' dbt metric (models/marts/_metrics.yml)
-    sql: CAST(${total_returned_units} AS DOUBLE) / NULLIF(CAST(${total_units_sold}
+    sql: CAST(${omni_dbt_intermediate__int_order_items_enriched.total_returned_units}
+      AS DOUBLE) /
+      NULLIF(CAST(${omni_dbt_intermediate__int_order_items_enriched.total_units_sold}
       AS DOUBLE), 0)
     label: Return Rate
     description: Ratio of returned units to total non-cancelled units sold
 
   total_units_sold:
     # Measure is defined by the 'total_units_sold' dbt metric (models/marts/_metrics.yml)
-    sql: ${order_item_id}
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.order_item_id}
     label: Total Units Sold
     description: Count of order items excluding cancelled
     aggregate_type: count
@@ -156,13 +160,21 @@ measures:
 
   total_returned_units:
     # Measure is defined by the 'total_returned_units' dbt metric (models/marts/_metrics.yml)
-    sql: CASE WHEN ${is_returned} THEN 1 ELSE 0 END
+    sql: CASE WHEN ${omni_dbt_intermediate__int_order_items_enriched.is_returned}
+      THEN 1 ELSE 0 END
     label: Total Returned Units
     description: Count of returned order items
     aggregate_type: sum
 
   count:
     aggregate_type: count
+
+  avg_unit_cost:
+    sql: ${omni_dbt_intermediate__int_order_items_enriched.unit_cost}
+    label: Avg Unit Cost
+    format: usdcurrency_2
+    #description: Average unit cost across order items
+    aggregate_type: average
 
 #The info below was pulled from your dbt repository and is read-only.
 dbt:

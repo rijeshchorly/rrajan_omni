@@ -59,6 +59,13 @@ measures:
     description: Count of distinct orders
     aggregate_type: count_distinct
 
+  avg_order_value:
+    # Measure is defined by the 'avg_order_value' dbt metric (models/marts/_metrics.yml)
+    sql: CAST(${prod_intermediate__int_order_items_enriched.total_revenue} AS
+      DOUBLE) / NULLIF(CAST(${total_orders} AS DOUBLE), 0)
+    label: Average Order Value
+    description: Average revenue per non-cancelled order
+
   total_orders:
     # Measure is defined by the 'total_orders' dbt metric (models/marts/_metrics.yml)
     sql: ${order_id}
@@ -91,7 +98,7 @@ dbt:
     ),
 
     order_items_enriched as (
-        select * from {{ ref('int_order__items__enriched') }}
+        select * from {{ ref('int_order_items_enriched') }}
     ),
 
     item_agg as (

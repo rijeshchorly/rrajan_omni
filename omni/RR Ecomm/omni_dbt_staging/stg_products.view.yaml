@@ -72,4 +72,4 @@ dbt:
     )
 
     select * from stg_products
-  referenced_by: [ int_order__items__enriched ]
+  referenced_by: [ int_order_items_enriched ]
