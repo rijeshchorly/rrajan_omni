@@ -85,6 +85,12 @@ dimensions:
   created_at:
     label: Created At (time)
 
+  _filter_completed_revenue:
+    # Produced by the dbt semantic layer integration
+    sql: ${status} = 'Shipped'
+    description: Intermediate filter dimension for measure completed_revenue
+    hidden: true
+
 measures:
   revenue:
     # Measure is defined in the 'order_items' dbt semantic model (models/marts/_semantic_models.yml)
@@ -163,6 +169,17 @@ measures:
 
   count:
     aggregate_type: count
+
+  completed_revenue:
+    # Measure is defined by the 'completed_revenue' dbt metric (models/marts/_metrics.yml)
+    sql: ${sale_price}
+    label: Completed Revenue
+    description: |
+      Total sale value of order items with a Shipped status.
+    aggregate_type: sum
+    filters:
+      _filter_completed_revenue:
+        is: true
 
 #The info below was pulled from your dbt repository and is read-only.
 dbt:
