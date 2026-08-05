@@ -1,6 +1,8 @@
-# Reference this view as prod_intermediate__int_order__items__enriched
-schema: prod_intermediate
-table_name: int_order__items__enriched
+# Reference this view as omni_dbt__int_order_items_enriched
+schema_label: ""
+
+schema: omni_dbt
+table_name: int_order_items_enriched
 
 dimensions:
   status: {}

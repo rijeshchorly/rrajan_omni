@@ -137,14 +137,3 @@ measures:
       ${main__order_items.id_count_distinct} END
     label: Return Rate
     format: PERCENT_2
-
-  completed_revenue:
-    sql: ${main__order_items.sale_price}
-    label: Completed Revenue
-    format: BIGUSDCURRENCY
-    description: Total sale value of order items with a Complete status, excluding
-      cancelled, returned, and in-flight items.
-    aggregate_type: sum
-    filters:
-      status:
-        is: Complete
