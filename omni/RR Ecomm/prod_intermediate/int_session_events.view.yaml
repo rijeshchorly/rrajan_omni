@@ -1,7 +1,7 @@
 # Reference this view as prod_intermediate__int_session_events
 #This description was pulled from dbt.
 description: |
-  Web events rolled up to session level with funnel-step counts and a conversion flag. One row per session.
+  Web events rolled up to session level with funnel-step counts and a conversion flag. One row per session. I am testing this 7th August
 
 schema: prod_intermediate
 table_name: int_session_events
@@ -71,7 +71,7 @@ dbt:
   name: int_session_events
   target_schema: prod
   description: |
-    Web events rolled up to session level with funnel-step counts and a conversion flag. One row per session.
+    Web events rolled up to session level with funnel-step counts and a conversion flag. One row per session. I am testing this 7th August
   config:
     schema: intermediate
     materialized: view

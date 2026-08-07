@@ -2,7 +2,7 @@
 schema_label: ""
 #This description was pulled from dbt.
 description: |
-  Web events rolled up to session level with funnel-step counts and a conversion flag. One row per session.
+  Web events rolled up to session level with funnel-step counts and a conversion flag. One row per session. I am testing this 7th August
 
 schema: omni_dbt_intermediate
 table_name: int_session_events
@@ -72,7 +72,7 @@ dbt:
   name: int_session_events
   target_schema: prod
   description: |
-    Web events rolled up to session level with funnel-step counts and a conversion flag. One row per session.
+    Web events rolled up to session level with funnel-step counts and a conversion flag. One row per session. I am testing this 7th August
   config:
     schema: intermediate
     materialized: view
