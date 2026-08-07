@@ -21,7 +21,6 @@ dimensions:
   returned_at: {}
 
   _filter_total_revenue:
-    # Produced by the dbt semantic layer integration
     description: Intermediat filter dimension for measure total_revenue
 
   order_item_id:
@@ -41,26 +40,22 @@ dimensions:
 
 measures:
   total_revenue:
-    # Measure is defined by the 'total_revenue' dbt metric (models/marts/_metrics.yml)
     aggregate_type: sum
     filters:
       _filter_total_revenue:
         is: true
 
   total_cost:
-    # Measure is defined by the 'total_cost' dbt metric (models/marts/_metrics.yml)
     aggregate_type: sum
     filters:
       _filter_total_cost:
         is: true
 
   return_rate:
-    # Measure is defined by the 'return_rate' dbt metric (models/marts/_metrics.yml)
     sql: CAST(${total_returned_units} AS DOUBLE) / NULLIF(CAST(${total_units_sold}
       AS DOUBLE), 0)
 
   total_units_sold:
-    # Measure is defined by the 'total_units_sold' dbt metric (models/marts/_metrics.yml)
     aggregate_type: count
     filters:
       _filter_total_units_sold:

@@ -1,6 +1,4 @@
 # Reference this view as prod_marts__mart_customer_ltv
-label: Customers
-
 schema: prod_marts
 table_name: mart_customer_ltv
 
@@ -28,12 +26,6 @@ dimensions:
 
   user_id:
     format: ID
-    primary_key: true
-
-  _entity_user:
-    # Entity is defined in the 'customers' dbt semantic model (models/marts/_semantic_models.yml)
-    sql: ${user_id}
-    hidden: true
 
 measures:
   total_lifetime_revenue:
@@ -68,19 +60,6 @@ measures:
 
   count:
     aggregate_type: count
-
-  customer_count:
-    # Measure is defined in the 'customers' dbt semantic model (models/marts/_semantic_models.yml)
-    sql: ${user_id}
-    description: Count of distinct customers
-    aggregate_type: count_distinct
-
-  total_customers:
-    # Measure is defined by the 'total_customers' dbt metric (models/marts/_metrics.yml)
-    sql: ${user_id}
-    label: Total Customers
-    description: Count of distinct registered customers
-    aggregate_type: count_distinct
 
 #The info below was pulled from your dbt repository and is read-only.
 dbt:
