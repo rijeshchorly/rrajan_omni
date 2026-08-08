@@ -1,4 +1,9 @@
 # Reference this view as preprod_intermediate__int_orders_with_metrics
+label: Int Orders With Metrics
+description: Orders with metrics
+tags: []
+hidden: false
+
 schema: preprod_intermediate
 table_name: int_orders_with_metrics
 
