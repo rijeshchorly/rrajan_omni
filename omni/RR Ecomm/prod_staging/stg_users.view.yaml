@@ -68,7 +68,8 @@ dbt:
             traffic_source,
 
             -- timestamps
-            created_at
+            created_at,
+            is_user
 
         from users
     )
