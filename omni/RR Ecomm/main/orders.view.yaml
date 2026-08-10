@@ -10,6 +10,7 @@ dimensions:
   shipped_at: {}
   delivered_at: {}
   num_of_item: {}
+  is_order: {}
 
   order_id:
     format: ID

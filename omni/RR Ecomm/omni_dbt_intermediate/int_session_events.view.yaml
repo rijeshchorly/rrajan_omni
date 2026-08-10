@@ -30,6 +30,14 @@ dimensions:
   user_id:
     format: ID
 
+  has_cart_activity:
+    #This description was pulled from dbt.
+    description: 1 if the session had at least one cart event, else 0
+
+  is_abandoned_cart:
+    #This description was pulled from dbt.
+    description: 1 if the session reached the cart but did not purchase, else 0
+
 measures:
   total_sessions:
     aggregate_type: count

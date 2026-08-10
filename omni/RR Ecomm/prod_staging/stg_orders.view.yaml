@@ -12,6 +12,7 @@ dimensions:
   returned_at: {}
   shipped_at: {}
   delivered_at: {}
+  is_order: {}
 
   order_id:
     format: ID

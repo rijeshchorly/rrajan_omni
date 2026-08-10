@@ -16,6 +16,7 @@ dimensions:
   gross_profit: {}
   avg_order_value: {}
   gross_margin_pct: {}
+  is_daily: {}
 
 measures:
   count:
