@@ -18,6 +18,7 @@ dimensions:
   longitude: {}
   traffic_source: {}
   created_at: {}
+  is_user: {}
 
   email_domain:
     sql: SUBSTRING(${main__users.email}, COALESCE(CASE WHEN POSITION('@' IN
