@@ -55,7 +55,8 @@ dbt:
             created_at,
             returned_at,
             shipped_at,
-            delivered_at
+            delivered_at,
+            is_order
 
         from orders
     )

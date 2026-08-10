@@ -5,6 +5,7 @@
     ${omni_dbt_intermediate__int_user_sessions.user_id}
   relationship_type: many_to_one
 
+# Relationship is defined in the 'orders' dbt semantic model (models/marts/_semantic_models.yml)
 - join_from_view: prod_intermediate__int_orders_with_metrics
   join_to_view: prod_marts__mart_customer_ltv
   join_type: always_left
