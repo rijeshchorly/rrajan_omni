@@ -3,5 +3,7 @@ label: Session Events
 description: Explore individual session-level behavior including traffic
   sources, browser, location, event types, conversions, and session duration.
 
+required_access_grants: [ core_model_extension ]
+
 joins:
   prod_intermediate__int_user_sessions: {}

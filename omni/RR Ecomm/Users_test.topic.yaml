@@ -4,5 +4,8 @@ description: Explore user profiles and attributes including demographics,
   location, and acquisition source.
 tags: [ ai_available ]
 
-joins: {}
 # this is the users view
+
+required_access_grants: [ core_model_extension ]
+
+joins: {}

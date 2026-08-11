@@ -24,6 +24,14 @@ ai_context: |
   Avoid using events count.
   Don't break by event_type.
 
+access_grants:
+  rrajantestdemo_model_extension:
+    user_attribute: rr_test
+    allowed_values: [ rrajantestdemo ]
+  core_model_extension:
+    user_attribute: rr_test
+    allowed_values: [ core ]
+
 # model layer edit test
 
 

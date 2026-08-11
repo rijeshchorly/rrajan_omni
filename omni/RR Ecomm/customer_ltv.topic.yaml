@@ -3,4 +3,6 @@ label: Customer LTV
 description: Analyze customer lifetime value including revenue, gross profit,
   order history, LTV tier, customer segment, and return behavior.
 
+required_access_grants: [ rrajantestdemo_model_extension ]
+
 joins: {}

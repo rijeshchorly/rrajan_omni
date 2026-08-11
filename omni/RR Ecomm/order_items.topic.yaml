@@ -15,6 +15,7 @@ fields:
     -main__inventory_items.product_id
   ]
 default_row_limit: 2000
+required_access_grants: [ rrajantestdemo_model_extension ]
 default_filters:
   main__users.country:
     is: []
@@ -25,9 +26,9 @@ default_filters:
 
 joins:
   main__users: {}
-  # main__products: {}
   main__inventory_items: {}
   main__orders: {}
+  main__products: {}
 
 skills:
   top_customers:
