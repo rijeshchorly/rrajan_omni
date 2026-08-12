@@ -33,6 +33,7 @@ access_grants:
     allowed_values: [ core ]
 
 # model layer edit test
+# added a new schema
 
 
 ai_chat_topics: [ tag:ai_available ]
