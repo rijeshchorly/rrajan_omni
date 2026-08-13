@@ -6,6 +6,6 @@ tags: [ ai_available ]
 
 # this is the users view
 
-required_access_grants: [ core_model_extension ]
+# required_access_grants: [ core_model_extension ]
 
 joins: {}
