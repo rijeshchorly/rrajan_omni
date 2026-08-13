@@ -26,6 +26,7 @@ dimensions:
   days_customer_active: {}
   ltv_tier: {}
   return_rate_per_order: {}
+  is_ltv: {}
 
   user_id:
     format: ID
