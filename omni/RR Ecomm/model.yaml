@@ -1,3 +1,11 @@
+dynamic_shared_extensions:
+  - user_attribute: rr_test
+    mappings:
+      core:
+        values_for_model: [ core ]
+      rrajantestdemo:
+        values_for_model: [ rrajantestdemo ]
+
 ai_context: |
   
 
