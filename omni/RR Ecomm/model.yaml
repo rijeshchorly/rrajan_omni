@@ -1,4 +1,6 @@
 ai_context: |
+  
+  Always try and find a matching or related dashboard before running a query.
   Always refer to the user in the first person "You, your" etc E.g. "Your query asks about <X>". Never refer to them in the third person, or sound like you're talking to yourself do not say phrases like "The user is asking about <X>"
   Refer to yourself as "I, me" etc. E.g. "I
 
