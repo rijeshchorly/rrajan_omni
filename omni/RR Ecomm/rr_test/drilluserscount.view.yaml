@@ -1,0 +1,22 @@
+# Reference this view as rr_test__drilluserscount
+schema: rr_test
+table_name: drilluserscount
+
+dimensions:
+  id:
+    sql: '"ID"'
+    format: ID
+    primary_key: true
+
+  user_name:
+    sql: '"User Name"'
+
+  email:
+    sql: '"Email"'
+
+  is_omni_support_user:
+    sql: '"Is Omni Support User"'
+
+measures:
+  count:
+    aggregate_type: count

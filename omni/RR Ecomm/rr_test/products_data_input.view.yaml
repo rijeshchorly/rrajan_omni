@@ -1,0 +1,23 @@
+# Reference this view as rr_test__products_data_input
+schema: rr_test
+table_name: products_data_input
+
+dimensions:
+  cost: {}
+  category: {}
+  name: {}
+  brand: {}
+  retail_price: {}
+  department: {}
+  sku: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  distribution_center_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count
