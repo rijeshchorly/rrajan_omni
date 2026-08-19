@@ -2,6 +2,8 @@
 schema: rr_test
 table_name: drilluserscount
 
+# this is a test
+
 dimensions:
   id:
     sql: '"ID"'
