@@ -2,7 +2,6 @@ base_view: main__events
 label: Events_test_2
 description: Explore site events including page views, sessions, traffic
   sources, and user behavior.
-tags: [ ai_available ]
 
 joins: {}
 
