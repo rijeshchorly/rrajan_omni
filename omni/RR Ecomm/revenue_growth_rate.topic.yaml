@@ -1,9 +1,8 @@
 base_view: revenue_growth_rate
 label: Revenue Growth Rate
-
 #comment
 
-
+tags: [ parent_ai ]
 
 joins:
   main__order_items: {}
