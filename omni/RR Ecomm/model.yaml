@@ -30,6 +30,8 @@ ai_context: |
   Avoid using events count.
   Don't break by event_type.
 
+ai_chat_topics: []
+
 # access_grants:
 #   rrajantestdemo_model_extension:
 #     user_attribute: rr_test
@@ -41,8 +43,6 @@ ai_context: |
 # model layer edit test
 # added a new schema
 
-
-ai_chat_topics: [ tag:ai_available ]
 
 skills:
   org_lookup_fast:
