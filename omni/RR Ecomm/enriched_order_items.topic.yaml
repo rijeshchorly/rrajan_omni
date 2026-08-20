@@ -2,5 +2,6 @@ base_view: omni_dbt_intermediate__int_order_items_enriched
 label: Enriched Order Items
 description: Order line items enriched with product, inventory, and cost data.
   Includes revenue, cost, margin, delivery, and return metrics.
+tags: [ ai_testdemo_available ]
 
 joins: {}
