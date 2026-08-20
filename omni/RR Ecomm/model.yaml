@@ -8,7 +8,6 @@ dynamic_shared_extensions:
 
 ai_context: |
   
-
   For every question that a user asks, first use the SearchDashboards skill to look for relevant existing dashboards before generating a new query.
 
   Always refer to the user in the first person "You, your" etc E.g. "Your query asks about <X>". Never refer to them in the third person, or sound like you're talking to yourself do not say phrases like "The user is asking about <X>"
@@ -29,6 +28,8 @@ ai_context: |
   Output must all be in caps.
   Avoid using events count.
   Don't break by event_type.
+
+ai_chat_topics: [ tag:parent_ai ]
 
 # access_grants:
 #   rrajantestdemo_model_extension:
