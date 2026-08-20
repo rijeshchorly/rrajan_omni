@@ -30,8 +30,6 @@ ai_context: |
   Avoid using events count.
   Don't break by event_type.
 
-ai_chat_topics: [ tag:parent_ai ]
-
 # access_grants:
 #   rrajantestdemo_model_extension:
 #     user_attribute: rr_test

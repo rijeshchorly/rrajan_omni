@@ -2,7 +2,6 @@ base_view: main__users
 label: Users
 description: Explore user profiles and attributes including demographics,
   location, and acquisition source.
-tags: [ parent_ai ]
 
 # this is the users view
 

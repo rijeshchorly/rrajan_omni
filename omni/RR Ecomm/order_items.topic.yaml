@@ -4,7 +4,6 @@ base_view: main__order_items
 label: Order Items
 description: Analyze order items alongside user attributes, product details,
   inventory, and order-level data.
-tags: [ parent_ai ]
 
 fields:
   [
