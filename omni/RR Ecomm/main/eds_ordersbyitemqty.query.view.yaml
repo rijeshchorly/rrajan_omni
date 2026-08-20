@@ -1,0 +1,51 @@
+# Reference this view as main__eds_ordersbyitemqty
+label: EDS-OrdersByItemQty
+
+schema: main
+sql: |-
+  select
+      status,
+      items_purchased as "Items Purchased",
+      count(*) as "Number of Orders",
+      count(*) / sum(count(*)) over (partition by status) as "% of Total",
+      sum(count(*)) over (partition by status order by items_purchased desc) as num_orders_with_n_items,
+      sum(count(*)) over (partition by status order by items_purchased desc)
+          / sum(count(*)) over (partition by status) as pct_orders_with_n_items
+  from (
+      select
+          oi.status,
+          oi.order_id,
+          count(distinct oi.id) as items_purchased
+      from main.order_items oi
+      group by 1, 2
+  )
+  group by 1, 2
+  order by 1, 2
+
+dimensions:
+  status:
+    sql: '"STATUS"'
+
+  items_purchased:
+    sql: '"Items Purchased"'
+
+  number_of_orders:
+    sql: '"Number of Orders"'
+
+  __of_total:
+    sql: '"% of Total"'
+    label: "% of Total"
+    format: PERCENT_2
+
+  num_orders_with____n_items:
+    sql: NUM_ORDERS_WITH_N_ITEMS
+    label: Num Orders with >= N Items
+
+  pct_orders_with____n_items:
+    sql: PCT_ORDERS_WITH_N_ITEMS
+    label: Pct Orders with >= N Items
+    format: PERCENT
+
+measures:
+  count:
+    aggregate_type: count
