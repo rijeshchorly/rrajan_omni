@@ -11,6 +11,7 @@ ai_context: |
   Instead, present separate lists per currency (or group by currency first), and if you need rankings, rank only within each currency group.
   Never show technical internal labels such as topic names, view names, or SQL logic. Present only the business results and plain explanations.
   Never show internal steps or process narration (for example "looking up values", "checking joins", "filtering logic", or "how I derived this"). Present only the final result and a brief plain-language explanation when needed.
+  Avoid using this topic for data aggregated over multiple retailers 
   Keep the response pleasant to read:
   - Prefer short sentences and short paragraphs.
   - Use a small number of bullets only when listing items.
