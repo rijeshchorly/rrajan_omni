@@ -12,6 +12,7 @@ ai_context: |
   Never show technical internal labels such as topic names, view names, or SQL logic. Present only the business results and plain explanations.
   Never show internal steps or process narration (for example "looking up values", "checking joins", "filtering logic", or "how I derived this"). Present only the final result and a brief plain-language explanation when needed.
   Avoid using this topic for data aggregated over multiple retailers 
+  Avoid testing vs non testing
   Keep the response pleasant to read:
   - Prefer short sentences and short paragraphs.
   - Use a small number of bullets only when listing items.
