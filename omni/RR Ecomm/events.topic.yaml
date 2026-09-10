@@ -1,4 +1,4 @@
-base_view: main__events
+base_view: omni_dbt_staging__stg_events
 label: Events_test_2
 description: Explore site events including page views, sessions, traffic
   sources, and user behavior.
